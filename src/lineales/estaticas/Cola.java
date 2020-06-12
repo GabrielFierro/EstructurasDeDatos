@@ -5,7 +5,7 @@ public class Cola {
 	 * 
 	 */
 	// Zona de declaración de Atributos
-	private static final int TAMANIO = 10;
+	private static final int TAMANIO = 13;
 	private Object[] array;
 	private int frente;
 	private int fin;
@@ -57,7 +57,7 @@ public class Cola {
 		/* Algoritmo que retorna el primer elemento de la estructura cola. En caso de que la misma
 		 * posea un elemento lo retorna, en caso de que no halle ninguno retorna el valor null.
 		 */
-		return this.array[this.frente];
+		return this.array[frente];
 	}
 	
 	public boolean esVacia() {
@@ -87,16 +87,15 @@ public class Cola {
 		/* Algoritmo recursivo que copia exactamente los valores de una estructura de tipo Cola en otra.
 		 */
 		// Zona de declaración de variables
-		Cola unaCola;
-		int i;
+		Cola clon;
 		// Zona de inicialización de variables
-		unaCola = new Cola(); 
-		i=0;
-		
-		for(i=0; i<this.TAMANIO; i++) {
-			unaCola.array[i] = this.array[i];
-		}
-		return unaCola;
+		clon = new Cola();
+
+		clon.frente = this.frente;
+		clon.fin = this.fin;
+		clon.array = this.array.clone();
+
+		return clon;
 		}
 	
 	@Override
