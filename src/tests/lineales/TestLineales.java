@@ -54,20 +54,23 @@ public class TestLineales {
 		
 	}
 public static boolean buscarObjetivo(int[] array, int longitud, int objetivo) {
-	int i, j, aux;
-	boolean resultado;
-	longitud = array.length;
-	resultado = false;
-	for(i=0; i<longitud; i++) {
-		aux = array[i];
-		for(j=1; j<longitud; j++) {
-			if(aux+array[j] == objetivo) {
-				resultado = true;
+		/* Algoritmo que dado un arreglo de tipo int, una longitud de tipo int, y un valor de tipo entero, determina
+		* si la suma de dos elementos que se encuentran en el arreglo dan como resultado el mismo valor que posee la
+		* variable objetivo. Retorna true en caso afirmativo y false en caso contrario.
+		 */
+		int i, j, aux;
+		boolean resultado;
+		resultado = false;
+		for(i=0; i<longitud; i++) {
+			aux = array[i];
+			for(j=1; j<longitud; j++) {
+				if(aux+array[j] == objetivo) {
+					resultado = true;
+				}
 			}
 		}
+		return resultado;
 	}
-	return resultado;
-}
 public static Cola listaToCola(int t, Lista lista) {
 	/* Algoritmo que recibe por parametro una un numero entero t y una estructura Lista con una sucesion de caracteres
 	 * (ingresados como tipo char de Java), que genera una Cola.
@@ -111,7 +114,7 @@ public static Cola listaToCola(int t, Lista lista) {
 			}
 			colaNueva.poner('&');
 			colaNueva.poner('&');
-			cont = 0;	
+			cont = 0;
 		}
 	}
 	while(!aux.esVacia()) {	// Saca los últimos elementos almacenados en las estructuras de tipo Pila
