@@ -1,5 +1,6 @@
 package tests.lineales;
 
+import java.net.StandardSocketOptions;
 import java.util.Scanner;
 
 import lineales.dinamicas.*;
@@ -16,20 +17,20 @@ public class TestLineales {
 		longitud = array.length-1;
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Ingrese un número como objetivo");
+		System.out.println("\nIngrese un número como objetivo");
 		objetivo = sc.nextInt();
 		
 		resultado = buscarObjetivo(array, longitud, objetivo);
 		
 		if(resultado) {
-			System.out.println("Se cumple con el objetivo: " + objetivo);
+			System.out.println("\nSe cumple con el objetivo: " + objetivo);
 		}
 		else {
-			System.out.println("No se cumple con el objetivo: " + objetivo);
+			System.out.println("\nNo se cumple con el objetivo: " + objetivo);
 		}
 				
 		
-		System.out.println("**********SE INSERTAN ELEMENTOS EN LA LISTA**********");
+		System.out.println("\n**********SE INSERTAN ELEMENTOS EN LA LISTA**********");
 		
 		lista.insertar('a', 1);
 		lista.insertar('b', 2);
@@ -61,10 +62,10 @@ public static boolean buscarObjetivo(int[] array, int longitud, int objetivo) {
 		int i, j, aux;
 		boolean resultado;
 		resultado = false;
-		for(i=0; i<longitud; i++) {
+		for(i=0; i<=longitud; i++) {
 			aux = array[i];
-			for(j=1; j<longitud; j++) {
-				if(aux+array[j] == objetivo) {
+			for(j=0; j<=longitud; j++) {
+				if(aux != array[j] && aux+array[j] == objetivo) {
 					resultado = true;
 				}
 			}
@@ -73,7 +74,8 @@ public static boolean buscarObjetivo(int[] array, int longitud, int objetivo) {
 	}
 public static Cola listaToCola(int t, Lista lista) {
 	/* Algoritmo que recibe por parametro una un numero entero t y una estructura Lista con una sucesion de caracteres
-	 * (ingresados como tipo char de Java), que genera una Cola.
+	 * (ingresados como tipo char de Java), y construye una estructura de tipo Cola con el formato
+	 * "cadenacadena'cadena'".
 	 */
 	// Zona de declaración de variables
 	Lista clon;
