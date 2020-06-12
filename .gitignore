@@ -1,0 +1,8 @@
+.classpath
+.classpath.xml
+.project
+.project.xml
+EstructurasDeDatos2.iml
+bin/
+.settings/
+.idea/
