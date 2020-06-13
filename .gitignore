@@ -4,7 +4,7 @@
 .project
 .project.xml
 EstructurasDeDatos2.iml
-bin/
+/bin/
 .settings/
 .idea/
 src/tests/
