@@ -11,6 +11,3 @@ src/test
 src/testConjuntistas
 src/testJerarquicas
 src/mipaquete
-
-#Include this specific directory
-!src/tests/lineales/MixLineales.java
