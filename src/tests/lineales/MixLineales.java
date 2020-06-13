@@ -14,35 +14,6 @@ public class MixLineales {
 		// Invocación del método testGenerarLista() que prueba distintos casos para el metodo generarLista.
 		testGenerarLista();
 
-		/*
-		Lista lista = new Lista();
-		Lista l1 = new Lista();
-
-		System.out.print("\n");
-		System.out.println("************ COMIENZA LA CARGA DE LA LISTA \"AB*C*DEF\" ************\n");
-		System.out.println("Insertar el elemento A: " + lista.insertar('A', 1));
-		System.out.println("Insertar el elemento B: " + lista.insertar('B', 2));
-		System.out.println("Insertar el elemento *: " + lista.insertar('*', 3));
-		System.out.println("Insertar el elemento C: " + lista.insertar('C', 4));
-		System.out.println("Insertar el elemento *: " + lista.insertar('*', 5));
-		System.out.println("Insertar el elemento D: " + lista.insertar('D', 6));
-		System.out.println("Insertar el elemento F: " + lista.insertar('E', 7));
-		System.out.println("Insertar el elemento E: " + lista.insertar('F', 8));
-
-		System.out.println("\nMuestro la lista original: " + lista.toString());
-		System.out.println("\nMuestro la lista l1: " + l1.toString());
-
-		l1 = generarLista(lista);	// Invocacion del metodo generarLista(lista)
-
-		System.out.println("\nMuestro la lista original: " + lista.toString());
-		System.out.println("\nMuestro la lista l1: " + l1.toString());
-
-		if(l1.esVacia()){	// Si la lista esta vacia muestro un cartel
-			System.out.println("\nLa lista original no cumple con la consigna");
-		}else{
-			System.out.println("\nLa lista generada es: " + l1.toString());
-		}*/
-
 	}
 	public static Lista generarLista(Lista lis) {
 	    /* Algoritmo que recibe una estructura de tipo Lista por parametro con elementos de tipo Char
