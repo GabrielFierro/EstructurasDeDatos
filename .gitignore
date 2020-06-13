@@ -1,13 +1,7 @@
-.classpath
-.classpath.xml
-.project
-.project.xml
-EstructurasDeDatos2.iml
-bin/
-.settings/
-.idea/
-src/test.dinamicas
-src/test.Conjuntistas
-src/test.Jerarquicas
-src/tests/
-src/mipaquete
+# Ignore all files
+/*.*
+
+# Only Include this directorie
+!src/
+
+
