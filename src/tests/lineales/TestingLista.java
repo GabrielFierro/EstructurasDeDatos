@@ -40,7 +40,7 @@ public class TestingLista {
 		System.out.println("\nSe muestra la concatenación de dos listas: 2,4,6,5,1,6,7" );
 		System.out.println(nuevaLista.toString());
 		
-		System.out.println("Se ejecutará el método vaciar sobre la lista1: ");
+		System.out.println("\nSe ejecutará el método vaciar sobre la lista1: ");
 		lista1.vaciar();
 		
 		System.out.println("\nSe insertarán elementos en la lista 1");

@@ -146,9 +146,7 @@ public class TestGenerico {
 
 
         System.out.println("Busco nivel de elemento inexistente: " + a.nivel(1000));
-     
-        
-        
+
         System.out.println("\n\n");
         System.out.println(ANSI_YELLOW_BACKGROUND+"----------------------------------------------------------------------------------------------------------"
                 + "----------------------------------------------------------------------------------------"+RESET);

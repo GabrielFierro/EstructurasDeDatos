@@ -28,7 +28,6 @@ public class TestLineales {
 		else {
 			System.out.println("\nNo se cumple con el objetivo: " + objetivo);
 		}
-				
 		
 		System.out.println("\n**********SE INSERTAN ELEMENTOS EN LA LISTA**********");
 		

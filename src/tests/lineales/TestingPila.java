@@ -8,7 +8,6 @@ import lineales.estaticas.Pila;
  * 
  */
 
-
 public class TestingPila {
 
     static String sOk = "OK!", sErr = "ERROR";

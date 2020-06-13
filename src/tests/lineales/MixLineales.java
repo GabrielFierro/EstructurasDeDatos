@@ -6,6 +6,7 @@ public class MixLineales {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		// Zona de declaración de variables
 		Lista lista = new Lista();
 		Lista l1 = new Lista();
 		

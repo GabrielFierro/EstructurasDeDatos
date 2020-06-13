@@ -7,7 +7,6 @@ public class TestingCola {
 	public static void main(String[] args) {
 		// Zona de declaración de variables
 		Cola unaCola, otraCola;
-		
 		// Zona de inicialización de variables
 		unaCola = new Cola();
 		otraCola = new Cola();

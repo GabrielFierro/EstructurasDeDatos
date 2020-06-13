@@ -64,8 +64,7 @@ public class TestPila {
 		else {
 			System.out.println("La secuencia no es capicua");
 		}
-		
-		
+
 	}
 public static boolean verificarSecuencia(Pila unaPila) {
 	/* Algoritmo que recibe un objeto de tipo Pila por parametro, crea una pila auxiliar de tipo Pila a partir de la misma, 

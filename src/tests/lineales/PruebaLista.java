@@ -5,9 +5,6 @@ import lineales.dinamicas.*;
 public class PruebaLista {
  
     public static void main(String[] args) {
-        /*
-         *
-         */
         // Zona de declaración de variables
         Lista l1, l2, listaConcat, listaInvert;
         int i;
