@@ -1,7 +1,6 @@
 # Ignore all files
 /*.*
-
-# Only Include this directorie
-!src/
+**/bin/*
+/src/tests
 
 
