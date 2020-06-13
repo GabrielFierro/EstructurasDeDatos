@@ -7,7 +7,6 @@ EstructurasDeDatos2.iml
 bin/
 .settings/
 .idea/
-src/tests
 src/test
 src/testConjuntistas
 src/testJerarquicas

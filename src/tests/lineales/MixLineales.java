@@ -90,5 +90,8 @@ public class MixLineales {
 		 */
 		// Zona de declaración de variables
 
+
+
+
 	}
 }
