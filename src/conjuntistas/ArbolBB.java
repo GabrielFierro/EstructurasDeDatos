@@ -112,8 +112,6 @@ public class ArbolBB {
         return clon;
     }
     private NodoABB cloneAux(NodoABB raiz) {
-        /*
-         */
         // Zona de declaración de variables
         NodoABB nuevo;
         // Zona de inicialización de variables
