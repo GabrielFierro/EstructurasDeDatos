@@ -129,9 +129,6 @@ public class ArbolBB {
     }
 
     private String toStringAux(NodoArbol original, String s) {
-        /*
-         *
-         */
         // Zona de declaración de variables
         NodoArbol izqAux, derAux;
 
