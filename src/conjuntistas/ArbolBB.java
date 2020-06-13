@@ -1,5 +1,7 @@
 package conjuntistas;
 
+import jerarquicas.ArbolBin;
+import jerarquicas.NodoArbol;
 import lineales.dinamicas.Lista;
 
 public class ArbolBB {
@@ -84,5 +86,83 @@ public class ArbolBB {
     public boolean vacio(){
 
     }
-    */
+
+    public boolean eliminarMinimo(){
+
+    }
+
+    public boolean eliminarMaximo(){
+
+    }
+
+     */
+
+
+    public ArbolBB clone() {
+        /* Crea el arbol clon vacio, si this.raiz no es vacío llama al método privado clone con su raiz
+         */
+        // Zona de declaración de variables
+        ArbolBB clon;
+        // Zona de inicialización de variables
+        clon = new ArbolBB();
+
+        if(this.raiz != null) {
+            clon.raiz = cloneAux(this.raiz);
+        }
+        return clon;
+    }
+    private NodoABB cloneAux(NodoABB raiz) {
+        /*
+         */
+        // Zona de declaración de variables
+        NodoABB nuevo;
+        // Zona de inicialización de variables
+        nuevo = raiz;
+
+        if(raiz.getIzquierdo() != null) {
+            nuevo.setIzquierdo(cloneAux(raiz.getIzquierdo()));
+        }
+        else {
+            if(raiz.getDerecho() != null) {
+                nuevo.setDerecho(cloneAux(raiz.getDerecho()));
+            }
+        }
+        return nuevo;
+    }
+
+    private String toStringAux(NodoArbol original, String s) {
+        /*
+         *
+         */
+        // Zona de declaración de variables
+        NodoArbol izqAux, derAux;
+
+        if(original != null) {
+            s = s + "\n" + original.getElem() + "\t";
+
+            izqAux = original.getIzquierdo();
+            derAux = original.getDerecho();
+
+            if(izqAux != null && derAux != null) {
+                s = s + "HI: " + izqAux.getElem() + "\t\t" + "HD: " + derAux.getElem();
+            }
+            else {
+                if(izqAux == null && derAux != null) {
+                    s = s + "HI: null" + "\t\t" + "HD: " + derAux.getElem();// + izqAux.getElem() + "HD: null";
+                }
+                else {
+                    if(derAux == null && izqAux != null) {
+                        s = s + "HI: " + izqAux.getElem() + "\t\t" + "HD: null";// + derAux.getElem();
+                    }
+                    else {
+                        s = s + "HI: null" + "\t" + "HD: null";
+                    }
+                }
+            }
+            s = toStringAux(original.getIzquierdo(), s);
+            s = toStringAux(original.getDerecho(), s);
+        }
+        return s;
+    }
+
 }
