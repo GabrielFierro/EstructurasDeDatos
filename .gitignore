@@ -1,4 +1,4 @@
-# Ignore all files
+# Ignore these files
 .classpath
 .classpath.xml
 .project
@@ -7,8 +7,8 @@ EstructurasDeDatos2.iml
 bin/
 .settings/
 .idea/
+src/tests/lineales
 src/test
 src/testConjuntistas
 src/testJerarquicas
 src/mipaquete
-src/tests
