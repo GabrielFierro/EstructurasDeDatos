@@ -9,5 +9,5 @@ bin/
 src/test.dinamicas
 src/test.Conjuntistas
 src/test.Jerarquicas
-src/tests/lineales/
+src/tests/
 src/mipaquete
