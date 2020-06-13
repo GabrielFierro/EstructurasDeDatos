@@ -31,9 +31,7 @@ public class PruebaLista {
         System.out.println("Inserta 5 en posicion 9: " + l1.insertar(5, 9));
         System.out.println("Inserta 6 en posicion 10: " + l1.insertar(6, 10));
         System.out.println("Inserta 9 en posicion 11: " + l1.insertar(9, 11));
-       
-       
-        /*
+
        
         System.out.println("\n***************COMIENZO A CARGAR LA LISTA 2***************");
         l2 = new Lista();
@@ -56,9 +54,8 @@ public class PruebaLista {
         System.out.println("\nLista original: " + l2.toString());
         System.out.println("\nLista invertida: " + listaInvert.toString());
        
-        */
-       
-       
+
+
         valor = comprobar(l1);
        
         if(valor) {

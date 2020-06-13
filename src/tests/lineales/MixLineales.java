@@ -13,12 +13,12 @@ public class MixLineales {
 		System.out.println("************COMIENZA LA CARGA DE LA LISTA************\n");
 		System.out.println("Insertar el elemento A: " + lista.insertar('A', 1));
 		System.out.println("Insertar el elemento B: " + lista.insertar('B', 2));
-		//System.out.println("Insertar el elemento *: " + lista.insertar('*', 3));
-		System.out.println("Insertar el elemento C: " + lista.insertar('C', 3));
-		//System.out.println("Insertar el elemento *: " + lista.insertar('*', 5));
-		System.out.println("Insertar el elemento D: " + lista.insertar('D', 4));
-		System.out.println("Insertar el elemento E: " + lista.insertar('E', 5));
-		System.out.println("Insertar el elemento E: " + lista.insertar('F', 6));
+		System.out.println("Insertar el elemento *: " + lista.insertar('*', 3));
+		System.out.println("Insertar el elemento C: " + lista.insertar('C', 4));
+		System.out.println("Insertar el elemento *: " + lista.insertar('*', 5));
+		System.out.println("Insertar el elemento D: " + lista.insertar('D', 6));
+		System.out.println("Insertar el elemento E: " + lista.insertar('E', 7));
+		System.out.println("Insertar el elemento E: " + lista.insertar('F', 8));
 		
 		
 		l1 = generarLista(lista);
@@ -39,51 +39,59 @@ public class MixLineales {
 	    Pila nuevaPila;
 	    Cola nuevaCola;
 	    Object elemento;
-		boolean exito;
+		int i;
 	    // Zona de inicializaci�n de variables
 	    clon = lis.clone();
 	    nuevaLista = new Lista();
 	    nuevaPila = new Pila();
 	    nuevaCola = new Cola();
-	    exito = true;
+		i = 1;
 
-	    while(!clon.esVacia() && exito) {
+	    while(!clon.esVacia()) {
 
 	        elemento = clon.recuperar(1); // Recupero el primer elemento de la estructura de tipo lista
-	       
-	        if(!elemento.equals('*') && exito) {	// Si no encuentro el caracter '*' que separa cadenas
-	            nuevaPila.apilar(elemento);
+
+	        if(!elemento.equals('*')) {	// Si no encuentro el caracter '*' que separa cadenas
+	        	nuevaPila.apilar(elemento);
 	            nuevaCola.poner(elemento);
-	            nuevaLista.insertar(elemento,1);
-	            clon.eliminar(1);
+	            nuevaLista.insertar(elemento,i);
+	           	clon.eliminar(1);
+	           	i++;
 	        }
-	        else {	// Si me encuentro con el caracter '*'
-	        	exito = false;
-	        	clon.eliminar(1);	// Elimino el caracter '*'
-	            while(!nuevaPila.esVacia()) {	// Mientras la pila no este vacia, inserto sus elementos en la lista
-	                nuevaLista.insertar(nuevaPila.obtenerTope(), 1);
-	                nuevaPila.desapilar();
-	            }
-	            while(!nuevaCola.esVacia()) {	// Mientras la cola no este vacia, inserto sus elementos en la lista
-	                nuevaLista.insertar(nuevaCola.obtenerFrente(),1);
-	                nuevaCola.sacar();
-	            }
-	            nuevaLista.insertar('*',1);
-	        }
+	        else {    // Si me encuentro con el caracter '*'
+				clon.eliminar(1);    // Elimino el caracter '*'
+				while (!nuevaPila.esVacia()) {    // Mientras la pila no este vacia, inserto sus elementos en la lista
+					elemento = nuevaPila.obtenerTope();
+					nuevaLista.insertar(elemento, i);
+					nuevaPila.desapilar();
+					i++;
+				}
+				while (!nuevaCola.esVacia()) {    // Mientras la cola no este vacia, inserto sus elementos en la lista
+					elemento = nuevaCola.obtenerFrente();
+					nuevaLista.insertar(elemento, i);
+					nuevaCola.sacar();
+					i++;
+				}
+				nuevaLista.insertar('*', i);
+				i++;
+			}
 	    }
-	    while(!nuevaCola.esVacia() && exito) {
+	    while(!nuevaCola.esVacia()) {
 	        if(!nuevaPila.esVacia()) {
-	            elemento = nuevaPila.obtenerTope();
-	            nuevaLista.insertar(elemento, 1);
-	            nuevaPila.desapilar();
+				elemento = nuevaPila.obtenerTope();
+				nuevaLista.insertar(elemento, i);
+				nuevaPila.desapilar();
+				i++;
 	        }
 	        else {
-	            elemento = nuevaCola.obtenerFrente();
-	            nuevaLista.insertar(elemento, 1);
-	            nuevaCola.sacar();
+				elemento = nuevaCola.obtenerFrente();
+				nuevaLista.insertar(elemento, i);
+				nuevaCola.sacar();
+				i++;
 	        }
 	    }
-	    return nuevaLista.invertir();
+	    return nuevaLista;
+	    //return nuevaLista.invertir();
 	}
 	public static void testGenerarLista(Lista l1){
 		/* Algoritmo que recibe por parámetro una estructura de tipo Lista, y realiza pruebas para determinar
