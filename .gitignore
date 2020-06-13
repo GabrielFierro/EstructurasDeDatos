@@ -1,4 +1,4 @@
-# Ignore all files
+# Ignore these files
 .classpath
 .classpath.xml
 .project
