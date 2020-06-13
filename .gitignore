@@ -4,8 +4,11 @@
 .project
 .project.xml
 EstructurasDeDatos2.iml
-/bin/
+bin/
 .settings/
 .idea/
+src/test
 src/tests/
-
+src/testConjuntistas
+src/testJerarquicas
+src/mipaquete
