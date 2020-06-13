@@ -11,7 +11,6 @@ package testJerarquicas;
  */
 
 import jerarquicas.ArbolBin;
-import jerarquicas.NodoArbol;
 
 public class TestBinario {
     
