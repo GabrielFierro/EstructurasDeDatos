@@ -8,7 +8,6 @@ bin/
 .settings/
 .idea/
 src/test
-src/tests/
 src/testConjuntistas
 src/testJerarquicas
 src/mipaquete
