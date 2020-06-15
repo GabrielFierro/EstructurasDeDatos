@@ -12,7 +12,7 @@ public class MixLineales {
 		 * un caracter *.
 		 */
 		// Invocación del método testGenerarLista() que prueba distintos casos para el metodo generarLista.
-		testGenerarLista();
+        testGenerarLista();
 
 	}
 	public static Lista generarLista(Lista lis) {
@@ -38,6 +38,8 @@ public class MixLineales {
 
 		if(!clon.esVacia()) {
 			if (!clon.recuperar(1).equals('*') && !clon.recuperar(ultPos).equals('*')) {
+				// Si en la primer o ultima posicion no encuentra el caracter '*' cumple la condición y ejecuta el
+				// algoritmo siguiente
 				while (!clon.esVacia()) {
 
 					elemento = clon.recuperar(1); // Recupero el primer elemento de la estructura de tipo lista
@@ -51,13 +53,14 @@ public class MixLineales {
 					} else {    // Si me encuentro con el caracter '*'
 						exito = false;
 						clon.eliminar(1);    // Elimino el caracter '*'
-						while (!nuevaPila.esVacia()) {    // Mientras la pila no este vacia, inserto sus elementos en la lista
+						while (!nuevaPila.esVacia()) {//Mientras la pila no este vacia inserto sus elementos en la lista
 							elemento = nuevaPila.obtenerTope();
 							nuevaLista.insertar(elemento, i);
 							nuevaPila.desapilar();
 							i++;
 						}
-						while (!nuevaCola.esVacia()) {    // Mientras la cola no este vacia, inserto sus elementos en la lista
+						while (!nuevaCola.esVacia()) {    // Mientras la cola no este vacia, inserto sus elementos
+							// en la lista
 							elemento = nuevaCola.obtenerFrente();
 							nuevaLista.insertar(elemento, i);
 							nuevaCola.sacar();
@@ -113,7 +116,8 @@ public class MixLineales {
 		num = sc.nextInt();
 
 		while(num < 0 || num > 5 ){
-			System.out.println("\nIngreso mal el valor. Ingrese nuevamente un numero para operar con el menu de opciones");
+			System.out.println("\nIngreso mal el valor.Ingrese nuevamente un numero para operar con el menu de opciones");
+			System.out.println("\n0) Finalizar la ejecucion");
 			System.out.println("\n1) Cargar lista de la forma \"*ABCDEF\"");
 			System.out.println("\n2) Cargar lista de la forma \"ABCDEF*\"");
 			System.out.println("\n3) Cargar lista de la forma \"AB*C*DEF\"");
@@ -140,15 +144,15 @@ public class MixLineales {
 
 					System.out.println("\nMuestro la lista original: " + lista.toString());
 
-					if(l1.esVacia()){	// Si la lista esta vacia muestro un cartel
+					if(l1.esVacia()){	// Si la lista esta vacia muestro un cartel indicandolo
 						System.out.println("\nLa lista original no cumple con la consigna");
-					} else{
+					} else{		// Muestro por pantalla la lista generada
 						System.out.println("\nLa lista generada es: " + l1.toString());
 					}
 
 					System.out.println("Vacio la lista para que pueda probar las demas opciones");
 					lista.vaciar();	// Vacia la estructura de tipo lista cargada previamente
-					l1.vaciar();
+					l1.vaciar();	// Vacia la estructura de tipo lista cargada previamente
 
 					break;
 				case 2:
@@ -174,7 +178,7 @@ public class MixLineales {
 
 					System.out.println("Vacio la lista para que pueda probar las demas opciones");
 					lista.vaciar();	// Vacia la estructura de tipo lista cargada previamente
-					l1.vaciar();
+					l1.vaciar();	// Vacia la estructura de tipo lista cargada previamente
 
 					break;
 				case 3:
@@ -198,9 +202,10 @@ public class MixLineales {
 					}else{
 						System.out.println("\nLa lista generada es: " + l1.toString());
 					}
+
 					System.out.println("Vacio la lista para que pueda probar las demas opciones");
 					lista.vaciar();	// Vacia la estructura de tipo lista cargada previamente
-					l1.vaciar();
+					l1.vaciar();	// Vacia la estructura de tipo lista cargada previamente
 
 					break;
 				case 4:
@@ -222,9 +227,11 @@ public class MixLineales {
 					}else{
 						System.out.println("\nLa lista generada es: " + l1.toString());
 					}
+
 					System.out.println("Vacio la lista para que pueda probar las demas opciones");
 					lista.vaciar();	// Vacia la estructura de tipo lista cargada previamente
-					l1.vaciar();
+					l1.vaciar();	// Vacia la estructura de tipo lista cargada previamente
+
 					break;
 				case 5:
 					System.out.print("\n");
@@ -248,7 +255,7 @@ public class MixLineales {
 			System.out.println("\n0) Finalizar la ejecucion");
 			System.out.println("\n1) Cargar lista de la forma \"*ABCDEF\"");
 			System.out.println("\n2) Cargar lista de la forma \"ABCDEF*\"");
-			System.out.println("\n3) Cargar lista de la forma \"*AB*C*DEF\"");
+			System.out.println("\n3) Cargar lista de la forma \"AB*C*DEF\"");
 			System.out.println("\n4) Cargar lista de la forma \"ABCDEF\"");
 			System.out.println("\n5) Probar con lista vacia");
 			System.out.print("\n");
