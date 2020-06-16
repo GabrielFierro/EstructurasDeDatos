@@ -212,28 +212,10 @@ public class Lista {
 		return clon;
 	}
 	
-	
 	public int longitud() {
 		/* Algoritmo que devuelve la cantidad de elementos que posee una estructura de tipo Lista
 		 */
-		// Zona de declaración de variables
-		int acum;
-		Nodo aux;
-		// Zona de inicialización de variables
-		aux = new Nodo();
-		acum = 0;
-		
-		if(this.cabecera != null) {
-			aux = this.cabecera.getEnlace();
-			acum = 1;
-			
-			while(aux.getEnlace() != null) {
-				acum++;
-				aux = aux.getEnlace();
-			}
-			acum++; // Para asegurarme que cuente el nodo de la última posición
-		}
-		return acum;
+		return this.longitud;
 	}
 	
 	@Override
