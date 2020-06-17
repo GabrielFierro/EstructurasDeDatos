@@ -1,1 +1,1 @@
-"# Estructuras-de-Datos" 
+"# Repositorio correspondiente a la materia Estructuras-de-Datos" 
