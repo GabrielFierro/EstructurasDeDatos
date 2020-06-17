@@ -17,8 +17,8 @@ public class Lista {
 	// Modificadores
 
 	public boolean insertar(Object nuevoElemento, int pos) {
-		/* Algoritmo que..
-		 *
+		/* Algoritmo que recibe por parametro un elemento de tipo Object y una posicion donde se desea agregar a
+		 * dicho elemento. Retorna verdadero si se pudo insertar y falso en caso contrario.
 		 */
 		// Zona de declaración de variables
 		boolean exito;
@@ -48,8 +48,8 @@ public class Lista {
 	}
 
 	public boolean eliminar(int pos) {
-		/* Algoritmp que
-		 *
+		/* Algoritmo que recibe por parametro la posicion del elementos que desea eliminar. Retorna true si se pudo
+		 * eliminar, y falso en caso contrario.
 		 */
 		// Zona de declaración de variables
 		boolean exito;
