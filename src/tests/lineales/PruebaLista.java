@@ -12,13 +12,6 @@ public class PruebaLista {
        
         System.out.println("***************COMIENZO A CARGAR LA LISTA 1***************");
         l1 = new Lista();
-        /*generarLista(l1);
-        System.out.println("\nMuestro la lista previamente cargada: " + l1.toString());
-        */
-        /*System.out.println("Inserta 2 en posicion 1: " + l1.insertar(2, 1));
-        System.out.println("Inserta 4 en posicion 2: " + l1.insertar(4, 2));
-        System.out.println("Inserta 6 en posicion 3: " + l1.insertar(6, 3));
-        */
        
         System.out.println("Inserta 9 en posicion 1: " + l1.insertar(9, 1));
         System.out.println("Inserta 6 en posicion 2: " + l1.insertar(6, 2));
