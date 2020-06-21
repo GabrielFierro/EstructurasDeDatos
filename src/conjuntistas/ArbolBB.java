@@ -56,115 +56,70 @@ public class ArbolBB {
         return exito;
     }
 
-    public boolean eliminar1(Comparable elemento) {
+    public boolean eliminar(Comparable elem) {
+        return eliminar1(this.raiz, null, elem);
+    }
+
+    public boolean eliminar1(NodoABB nodo, NodoABB padre, Comparable elem) {
         /* Recibe por parametro el elemento que se desea eliminar y llama al metodo eliminar1Aux. Retorna verdadero si
-        * el elemento se pudo eliminar y falso en caso contrario y se procede a removerlo del arbol. Si no se encuentra
-        * el elemento no se puede realizar la eliminacion. Devuelve verdadero si el elemento se elimina de la estructura
-        * y falso en caso contrario.
-        */
+         * el elemento se pudo eliminar y falso en caso contrario y se procede a removerlo del arbol. Si no se encuentra
+         * el elemento no se puede realizar la eliminacion. Devuelve verdadero si el elemento se elimina de la estructura
+         * y falso en caso contrario.
+         */
         // Zona de declaracion de variables
         boolean exito;
         // Zona de inicializacion de variables
         exito = false;
-
-        if (this.raiz != null) {
-            if((this.raiz.getElem().compareTo(elemento) == 0) && this.raiz.getIzquierdo()!=null || this.raiz.getDerecho()!=null){
-                exito = eliminar1Aux(this.raiz, elemento);
+        if (nodo != null) {
+            Comparable elemento = nodo.getElem();
+            if (elemento.equals(elem)) {
+                if (nodo.getIzquierdo() == null && nodo.getDerecho() == null) {
+                    exito = verificarHoja(nodo, padre);
+                }
+            } else if (elemento.compareTo(elem) > 0) {
+                exito = eliminar1(nodo.getIzquierdo(), nodo, elem); // Busca por rama izquierda
+            } else {
+                exito = eliminar1(nodo.getDerecho(), nodo, elem);   // Busca por rama derecha
             }
         }
         return exito;
     }
 
-    private boolean eliminar1Aux(NodoABB nodo, Comparable elemento) {
+    private boolean verificarHoja(NodoABB nodo, NodoABB padre) {
+        // Zona de declaracion de variables
+        boolean exito;
+        // Zona de inicializacion de variables
+        exito = false;
+
+        NodoABB izquierdo = nodo.getIzquierdo();
+        NodoABB derecho = nodo.getDerecho();
+        // determino el caso a eliminar
+        if (izquierdo == null && derecho == null) {
+            // elimino un nodo hoja (sin hijos)
+            exito = eliminarHoja(nodo, padre);
+        }
+        return exito;
+    }
+
+    private boolean eliminarHoja(NodoABB hijo, NodoABB padre) {
         /* Algoritmo que recibe por parametro el elemento que se desea eliminar y se procede a removerlo del arbol.
          * Contemplando el caso en el que el nodo a eliminar es nodo hoja.
          */
         // Zona de declaracion de variables
         boolean exito;
-        NodoABB nodoPadre, nodoHijo;
         // Zona de inicializacion de variables
         exito = false;
-
-        if (nodo != null && !exito) {
-
-            if (nodo.getDerecho() != null && nodo.getDerecho().getElem().compareTo(elemento) <= 0) {  // Recorre rama derecha
-                nodoPadre = nodo;
-                nodoHijo = nodo.getDerecho();
-                exito = eliminar1Aux(nodoHijo, elemento);
-
-                if (nodoHijo.getIzquierdo() == null && nodoHijo.getDerecho() == null) {
-                    if (nodoHijo.getElem().compareTo(elemento) == 0) {  // Si encontre el elemento lo elimino
-                        nodoPadre.setDerecho(null);
-                        exito = true;
-                    }
-                }
-            } else {
-                if (nodo.getIzquierdo() != null && nodo.getIzquierdo().getElem().compareTo(elemento) >= 0) { // Recorre rama izquierda
-                    nodoPadre = nodo;
-                    nodoHijo = nodo.getIzquierdo();
-                    exito = eliminar1Aux(nodoHijo, elemento);
-
-                    if (nodoHijo.getIzquierdo() == null && nodoHijo.getDerecho() == null) {
-                        if (nodoHijo.getElem().compareTo(elemento) == 0) { // Si encontre el elemento lo elimino
-                            nodoPadre.setIzquierdo(null);
-                            exito = true;
-                        }
-                    }
-                }
-            }
-        }
-        return exito;
-    }
-
-    public boolean eliminar2(Comparable elemento) {
-        /* Recibe por parametro el elemento que se desea eliminar y llama al metodo eliminar2Aux. Se procede a removerlo
-         * del arbol. Si no se encuentra el elemento no se puede eliminar. Devuelve verdadero si el elemento se elimina
-         * de la estructura y falso en caso contrario.
-        */
-        // Zona de declaracion de variables
-        boolean exito;
-        // Zona de inicializacion de variables
-        exito = false;
-
-        if (this.raiz != null) {
-            if((this.raiz.getElem().compareTo(elemento) == 0) || this.raiz.getIzquierdo()!=null || this.raiz.getDerecho()!=null){
-                exito = eliminar2Aux(this.raiz, elemento);
-            }
-        }
-        return exito;
-    }
-
-    private boolean eliminar2Aux(NodoABB nodo, Comparable elemento) {
-        /* Algoritmo que recibe por parametro el elemento que se desea eliminar y se procede a removerlo del arbol.
-         * Contemplando el caso donde el nodo que se desea eliminar posee un hijo. Por lo que el nodo hijo, debe tomar
-         * el lugar del nodo padre.
-         */
-        // Zona de declaracion de variables
-        boolean exito;
-        NodoABB nodoPadre, nodoHijo;
-        // Zona de inicializacion de variables
-        exito = false;
-
-        if(nodo != null){
-            if(nodo.getDerecho() != null && nodo.getDerecho().getElem().compareTo(elemento) <= 0){  // Recorre rama derecha
-                nodoPadre = nodo;
-                nodoHijo = nodo.getDerecho();
-                exito = eliminar1Aux(nodoHijo, elemento);
-                if(nodoHijo.getElem().compareTo(elemento) == 0){    // Si encontre el elemento lo elimino
-                    nodoPadre.setDerecho(nodoHijo.getDerecho());
-                    exito = true;
-                }
-            } else{
-                if(nodo.getIzquierdo() != null && nodo.getIzquierdo().getElem().compareTo(elemento) >= 0){ // Recorre rama izquierda
-                    nodoPadre = nodo;
-                    nodoHijo = nodo.getIzquierdo();
-                    exito = eliminar1Aux(nodoHijo, elemento);
-                    if(nodoHijo.getElem().compareTo(elemento) == 0){ // Si encontre el elemento lo elimino
-                        nodoPadre.setIzquierdo(nodoHijo.getIzquierdo());
-                        exito = true;
-                    }
-                }
-            }
+   /*     System.out.println("padre: " + padre.getElem());
+        System.out.println("hijo: " + hijo.getElem());*/
+        if (padre == null) {
+            // caso especial un unico elemento
+            this.raiz = null;
+        } else if (padre.getIzquierdo() == hijo) {
+            padre.setIzquierdo(null);
+            exito = true;
+        } else {
+            padre.setDerecho(null);
+            exito = true;
         }
         return exito;
     }
@@ -192,7 +147,7 @@ public class ArbolBB {
         // Zona de inicializacion de variables
         pertenece = false;
 
-        if(nodo != null) {
+        if (nodo != null) {
             if (elemento.compareTo(nodo.getElem()) == 0) {
                 pertenece = true;
             } else {
@@ -244,7 +199,7 @@ public class ArbolBB {
         // Zona de declaracion de variables
         lis = new Lista();
 
-        if (this.raiz != null) {
+        if (this.raiz != null && (elemMin.compareTo(elemMax) < 0)) {
             listarRangoAux(elemMin, elemMax, this.raiz, lis);
         }
         return lis;
@@ -426,7 +381,7 @@ public class ArbolBB {
         // Zona de declaración de variables
         String s;
         // Zona de inicialización de variables
-        s = "Arbol binario vacio";
+        s = "Arbol vacio";
 
         if (this.raiz != null) {
             s = toStringAux(this.raiz, "");
