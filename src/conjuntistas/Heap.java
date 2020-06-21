@@ -23,8 +23,7 @@ public class Heap{
 		// Zona de inicializaci�n de variables
 		exito = false;
 
-		if(this.ultimo+1 < this.TAMANIO) {
-			
+		if(this.ultimo+1 < TAMANIO) {
 			this.ultimo++;
 			this.heap[this.ultimo] = elemento;
 			hacerSubir(this.ultimo);
@@ -52,42 +51,29 @@ public class Heap{
 		}
 		return exito;
 	}
-	
-	private void hacerSubir(int posPadre) {
-		// Zona de declaraci�n de variables 
-		int posH;
-		Comparable temp = this.heap[posPadre];
-		boolean salir = false;
-		
-		while(!salir) {
-			posH = posPadre * 2;
-			if(posH <= this.ultimo) {
-				// temp tiene al menos un hijo (izq) y lo considera menor
-				
-				if(posH < this.ultimo) {
-					// hijoMenor tiene hermano derecho
-					
-					if(this.heap[posH + 1].compareTo(this.heap[posH]) < 0) {
-						// El hijo derecho es el menor de los dos
-						posH++;
-					}
+
+	private void hacerSubir(int posHijo) {
+		// Zona de declaracion de variables
+		int posP;
+		Comparable temp;
+		boolean salir;
+		// Zona de inicializacion de variables
+
+		temp = this.heap[posHijo];
+		salir = true;
+
+		while (salir) {
+			posP = posHijo / 2;
+			if (posP >= 1) {
+				if (this.heap[posP].compareTo(temp) > 0) {
+					this.heap[posHijo] = this.heap[posP];
+					this.heap[posP] = temp;
+					posHijo = posP;
+				} else {
+					salir = false;
 				}
-				
-				// Compara al hijo menor con el padre
-				if(this.heap[posH].compareTo(temp) < 0) {
-					// El hijo es menor que el padre, los intercambia
-					this.heap[posPadre] = this.heap[posH];
-					this.heap[posH] = temp;
-					posPadre = posH;
-				}
-				else {
-					// el padre es menor que sus hijos, est� bien ubicado
-					salir = true;
-				}
-			}
-			else {
-				// el temp es hoja, est� bien ubicado
-				salir = true;
+			} else {
+				salir = false;
 			}
 		}
 	}
@@ -111,7 +97,6 @@ public class Heap{
 						posH++;
 					}
 				}
-				
 				// Compara al hijo menor con el padre
 				if(this.heap[posH].compareTo(temp) < 0) {
 					// El hijo es menor que el padre, los intercambia
@@ -138,7 +123,8 @@ public class Heap{
 		aux = null;
 
 		if(this.heap[1] != null) {
-			aux = (Comparable) this.heap[1];
+			aux = this.heap[1];
+			System.out.println("Cima del arbol: " + aux);
 		}
 		return aux;
 	}
