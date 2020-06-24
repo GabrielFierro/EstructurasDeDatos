@@ -43,7 +43,7 @@ public class Heap{
 		}
 		else {
 			// Saca la ra�z y pone la �ltima hoja en su lugar
-			this.heap[1] = this.heap[ultimo-1];
+			this.heap[1] = this.heap[ultimo];
 			this.ultimo--;
 			// Restablece la propiedad de heap minimo
 			hacerBajar(1);
