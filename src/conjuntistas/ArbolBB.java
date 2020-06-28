@@ -56,11 +56,12 @@ public class ArbolBB {
         return exito;
     }
 
-    public boolean eliminar(Comparable elem) {
-        return eliminar1(this.raiz, null, elem);
+    public boolean eliminarNodoHoja(Comparable padre, Comparable elem) {
+        return eliminarNodoHojaAux(this.raiz, padre, elem);
     }
 
-    public boolean eliminar1(NodoABB nodo, NodoABB padre, Comparable elem) {
+
+    private boolean eliminarNodoHojaAux(NodoABB nodo, Comparable padre, Comparable elem) {
         /* Recibe por parametro el elemento que se desea eliminar y llama al metodo eliminar1Aux. Retorna verdadero si
          * el elemento se pudo eliminar y falso en caso contrario y se procede a removerlo del arbol. Si no se encuentra
          * el elemento no se puede realizar la eliminacion. Devuelve verdadero si el elemento se elimina de la estructura
@@ -70,58 +71,55 @@ public class ArbolBB {
         boolean exito;
         // Zona de inicializacion de variables
         exito = false;
-        if (nodo != null) {
+
+        if(nodo != null){
             Comparable elemento = nodo.getElem();
-            if (elemento.equals(elem)) {
-                if (nodo.getIzquierdo() == null && nodo.getDerecho() == null) {
-                    exito = verificarHoja(nodo, padre);
+
+            if(elem.compareTo(elemento) == 0){
+                exito = true;
+            }else {
+                if ((nodo.getIzquierdo() != null || nodo.getDerecho() != null) && elem.compareTo(elemento) < 0) {
+                    exito = eliminarNodoHojaAux(nodo.getIzquierdo(), padre, elem);
+                    if (exito) {
+                        NodoABB p = obtenerNodo(nodo, padre);
+                        p.setIzquierdo(null);
+                    }
                 }
-            } else if (elemento.compareTo(elem) > 0) {
-                exito = eliminar1(nodo.getIzquierdo(), nodo, elem); // Busca por rama izquierda
-            } else {
-                exito = eliminar1(nodo.getDerecho(), nodo, elem);   // Busca por rama derecha
+                if((nodo.getDerecho() != null || nodo.getIzquierdo() != null) && elem.compareTo(elemento) > 0){
+                    exito = eliminarNodoHojaAux(nodo.getDerecho(), padre, elem);
+                    if (exito) {
+                        NodoABB p = obtenerNodo(nodo, padre);
+                        p.setDerecho(null);
+                    }
+                }
             }
         }
         return exito;
     }
-
-    private boolean verificarHoja(NodoABB nodo, NodoABB padre) {
-        // Zona de declaracion de variables
-        boolean exito;
-        // Zona de inicializacion de variables
-        exito = false;
-
-        NodoABB izquierdo = nodo.getIzquierdo();
-        NodoABB derecho = nodo.getDerecho();
-        // determino el caso a eliminar
-        if (izquierdo == null && derecho == null) {
-            // elimino un nodo hoja (sin hijos)
-            exito = eliminarHoja(nodo, padre);
-        }
-        return exito;
-    }
-
-    private boolean eliminarHoja(NodoABB hijo, NodoABB padre) {
-        /* Algoritmo que recibe por parametro el elemento que se desea eliminar y se procede a removerlo del arbol.
-         * Contemplando el caso en el que el nodo a eliminar es nodo hoja.
+    private NodoABB obtenerNodo(NodoABB nodo, Object buscado) {
+        /* Método privado que busca un elemento y devuelve el nodo que lo contiene.
+         * Si no se encuentra el buscado devuelve null
          */
-        // Zona de declaracion de variables
-        boolean exito;
-        // Zona de inicializacion de variables
-        exito = false;
-   /*     System.out.println("padre: " + padre.getElem());
-        System.out.println("hijo: " + hijo.getElem());*/
-        if (padre == null) {
-            // caso especial un unico elemento
-            this.raiz = null;
-        } else if (padre.getIzquierdo() == hijo) {
-            padre.setIzquierdo(null);
-            exito = true;
-        } else {
-            padre.setDerecho(null);
-            exito = true;
+        // Zona de declaración de variables
+        NodoABB resultado;
+        // Zona de inicialización de variables
+        resultado = null;
+
+        if(nodo != null) {
+            if(nodo.getElem().equals(buscado)) {
+                // Si el buscado es n, lo devuelve
+                resultado = nodo;
+            }
+            else {
+                // No es el buscado: busca el primero en el HI
+                resultado = obtenerNodo(nodo.getIzquierdo(), buscado);
+                // Si no lo encuentra en el HI, busca en HD
+                if(resultado == null) {
+                    resultado = obtenerNodo(nodo.getDerecho(), buscado);
+                }
+            }
         }
-        return exito;
+        return resultado;
     }
 
     public boolean pertenece(Comparable elemento) {
@@ -190,7 +188,7 @@ public class ArbolBB {
         }
     }
 
-    public Lista listarRango(Comparable elemMin, Comparable elemMax) {
+    public Lista listarPorRango(Comparable elemMin, Comparable elemMax) {
         /* Recorre parte del arbol (solo lo necesario) y devuelve una lista ordenada con los elementos que se encuentran
          *en el intervalo [elemMinimo, elemMaximo]
          */
@@ -417,5 +415,66 @@ public class ArbolBB {
         }
         return s;
     }
+
+    public int cantidadDeHojas(){
+        // Zona de declaracion de variables
+        int resultado;
+        // Zona de inicializacion de variables
+        resultado = 0;
+
+        if(this.raiz != null){
+            resultado = cantidadDeHojasAux(this.raiz);
+        }
+        return resultado;
+    }
+
+    private int cantidadDeHojasAux(NodoABB nodo){
+        // Zona de declaracion de variables
+        int cant;
+        // Zona de inicializacion de variables
+        cant = 0;
+        if(nodo != null){
+            if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
+                cant = cantidadDeHojasAux(nodo.getIzquierdo());
+                cant = cantidadDeHojasAux(nodo.getDerecho());
+                cant++;
+            }
+        }
+        return cant;
+    }
+
+    public int masNodosEnRango(int min, int max){
+        // Zona de inicializacion de variables
+        int resultado;
+        // Zona de declaracion de variables
+        resultado = 0;
+
+        if(this.raiz != null && min < max){
+            resultado = masNodosEnRangoAux(this.raiz, min, max);
+        }
+        return resultado;
+    }
+
+    private int masNodosEnRangoAux(NodoABB nodo, int min, int max){
+        // Zona de declaracion de variables
+        Comparable elem;
+        NodoABB izq, der;
+        int cant;
+        // Zona de inicializacion de variables
+        cant = 0;
+
+        if (nodo != null) {
+            elem = nodo.getElem();
+
+            cant += masNodosEnRangoAux(nodo.getDerecho(), min, max);
+            if (elem.compareTo(max) <= 0 && elem.compareTo(min) >= 0) {
+                cant++;
+            }
+            cant += masNodosEnRangoAux(nodo.getIzquierdo(), min, max);
+            System.out.println("Nodo: " + elem + "\tcant: " + cant);
+        }
+        return cant;
+    }
+
 
 }
