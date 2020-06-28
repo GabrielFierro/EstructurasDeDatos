@@ -56,46 +56,121 @@ public class ArbolBB {
         return exito;
     }
 
-    public boolean eliminarNodoHoja(Comparable padre, Comparable elem) {
-        return eliminarNodoHojaAux(this.raiz, padre, elem);
-    }
-
-
-    private boolean eliminarNodoHojaAux(NodoABB nodo, Comparable padre, Comparable elem) {
-        /* Recibe por parametro el elemento que se desea eliminar y llama al metodo eliminar1Aux. Retorna verdadero si
-         * el elemento se pudo eliminar y falso en caso contrario y se procede a removerlo del arbol. Si no se encuentra
-         * el elemento no se puede realizar la eliminacion. Devuelve verdadero si el elemento se elimina de la estructura
-         * y falso en caso contrario.
+    public boolean eliminar(Comparable elem){
+        /* Algoritmo que dado un elemento de tipo Comparable, verifica que la raiz de la estructura de tipo Arbol
+         * Binario de Busqueda tenga un nodo. En caso de que sea verdadero llama al metodo eliminarAux con dicho elem,
+         * junto a la raiz del mencionado arbol, y procede a eliminar dicho elemento. Luego, si pudo eliminar el
+         * elemento retorna true, y, en caso contrario, retorna false.
          */
         // Zona de declaracion de variables
         boolean exito;
         // Zona de inicializacion de variables
         exito = false;
 
+        if(this.raiz != null){
+            exito = eliminarAux(elem, this.raiz, null);
+        }
+        return exito;
+    }
+
+    private boolean eliminarAux(Comparable elem, NodoABB nodo, NodoABB padre){
+        /* Algoritmo que recibe por parametro un elemento de tipo Comparable, un nodo de tipo NodoABB junto a otro nodo
+         * de tipo ABB. Identifica el nodo que se desea eliminar, es decir, puede ser un nodo hoja o un nodo que tenga
+         * un solo hijo. Luego, invoca el metodo eliminarNodoHoja o eliminarHijo respectivamente, y procede a eliminar
+         * el elemento deseado. Retorna true si pudo eliminar y falso en caso contrario.
+         */
+        // Zona de declaracion de variables
+        boolean exito;
+        // Zona de inicializacion de variables
+        exito = true;
+
         if(nodo != null){
             Comparable elemento = nodo.getElem();
 
-            if(elem.compareTo(elemento) == 0){
-                exito = true;
-            }else {
-                if ((nodo.getIzquierdo() != null || nodo.getDerecho() != null) && elem.compareTo(elemento) < 0) {
-                    exito = eliminarNodoHojaAux(nodo.getIzquierdo(), padre, elem);
-                    if (exito) {
-                        NodoABB p = obtenerNodo(nodo, padre);
-                        p.setIzquierdo(null);
+            if(elem.compareTo(elemento) < 0){   // Analizo la rama izquierda
+                exito = eliminarAux(elem, nodo.getIzquierdo(), nodo);
+            }
+            else{
+                if(elem.compareTo(elemento) > 0){   // Analizo la rama derecha
+                    exito = eliminarAux(elem, nodo.getDerecho(), nodo);
+                }
+                else{
+                    if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){   // No tiene hijos
+                        exito = eliminarNodoHoja(nodo, padre);
+                    }
+                    else{
+                        if(nodo.getIzquierdo() == null || nodo.getDerecho() == null){   // Tiene un solo hijo
+                            exito = eliminarHijo(nodo, padre);
+                        }
                     }
                 }
-                if((nodo.getDerecho() != null || nodo.getIzquierdo() != null) && elem.compareTo(elemento) > 0){
-                    exito = eliminarNodoHojaAux(nodo.getDerecho(), padre, elem);
-                    if (exito) {
-                        NodoABB p = obtenerNodo(nodo, padre);
-                        p.setDerecho(null);
-                    }
+            }
+        }
+        else{
+            exito = false;  // En caso de que el elemento no se encuentre en la estructura
+        }
+        return exito;
+    }
+
+    private boolean eliminarNodoHoja(NodoABB hijo, NodoABB padre) {
+        /* Recibe por parametro el elemento que se desea eliminar y llama al metodo eliminar1Aux. Retorna verdadero si
+         * el elemento se pudo eliminar y falso en caso contrario y se procede a removerlo del arbol. Si no se encuentra
+         * el elemento no se puede realizar la eliminacion. Devuelve verdadero si el elemento se elimina de la estructura
+         * y falso en caso contrario.
+         */
+        // Zona de declaracion de variables
+        boolean exito, esHoja;
+        // Zona de inicializacion de variables
+        exito = true;
+
+        if(padre == null){  // Caso raiz
+            this.raiz = null;
+        }
+        else{
+            if (padre.getIzquierdo() != null && padre.getIzquierdo().getElem().compareTo(hijo.getElem()) == 0) {
+                padre.setIzquierdo(null);
+            } else if (padre.getDerecho() != null && padre.getDerecho().getElem().compareTo(hijo.getElem()) == 0) {
+                padre.setDerecho(null);
+            }
+        }
+        return exito;
+    }
+
+    private boolean eliminarHijo(NodoABB hijo, NodoABB padre){
+        /* Algoritmo que recibe por parametro un nodo hijo de tipo NodoABB junto a otro nodo padre de tipo NodoABB,
+         * y busca al hijo por la rama del arbol correspondiente. Una vez encontrado, se elimina el nodo hijo.
+         * El algoritmo retorna true, dado que siempre es posible eliminar en esta instancia.
+         */
+        // Zona de declaracion de variables
+        boolean exito;
+        // Zona de inicializacion de variables
+        exito = true;
+
+        if(hijo.getElem().compareTo(padre.getElem()) < 0){  // Pregunto si el hijo esta del lado izquierdo
+            if(hijo.getDerecho() != null){  // Tiene hijo derecho
+                NodoABB aux = hijo.getDerecho();
+                padre.setDerecho(aux);
+            }
+            else{   // Tiene hijo izquierdo
+                NodoABB aux = hijo.getIzquierdo();
+                padre.setIzquierdo(aux);
+            }
+        }
+        else{
+            if(hijo.getElem().compareTo(padre.getElem()) > 0){  // Pregunto si el hijo esta del lado derecho
+                if(hijo.getDerecho() != null){  // Tiene hijo derecho
+                    NodoABB aux = hijo.getDerecho();
+                    padre.setDerecho(aux);
+                }
+                else{   // Tiene hijo izquierdo
+                    NodoABB aux = hijo.getIzquierdo();
+                    padre.setIzquierdo(aux);
                 }
             }
         }
         return exito;
     }
+
     private NodoABB obtenerNodo(NodoABB nodo, Object buscado) {
         /* Método privado que busca un elemento y devuelve el nodo que lo contiene.
          * Si no se encuentra el buscado devuelve null
@@ -174,7 +249,8 @@ public class ArbolBB {
     }
 
     private void listarAux(NodoABB nodo, Lista l) {
-        /*
+        /* Algoritmo que recibe por parametro un nodo de tipo NodoABB junto a una lista de tipo Lista, y carga la misma
+         * con el elemento nodo y su/s hijo/s si los tuviese.
          */
         // Zona de declaración de variables
         NodoABB nodoActual;
@@ -182,9 +258,9 @@ public class ArbolBB {
         if (nodo != null) {
             nodoActual = new NodoABB(nodo.getElem());
 
-            listarAux(nodo.getDerecho(), l);
+            listarAux(nodo.getDerecho(), l);    // Llamado recursivo por la rama derecha
             l.insertar(nodoActual.getElem(), 1);
-            listarAux(nodo.getIzquierdo(), l);
+            listarAux(nodo.getIzquierdo(), l);  // Llamado recursivo por la rama izquierda
         }
     }
 
@@ -271,7 +347,7 @@ public class ArbolBB {
 
     public boolean eliminarMinimo() {
         /* Recorre la rama correspondiente y elimina el minimo elemento almacenado en el arbol.
-         *Retorna verdadero si pudo eliminarlo y falso en caso contrario.
+         * Retorna verdadero si pudo eliminarlo y falso en caso contrario.
          */
         // Zona de declaracion de variables
         NodoABB nodo, nodoPadre;
@@ -434,28 +510,36 @@ public class ArbolBB {
         // Zona de inicializacion de variables
         cant = 0;
         if(nodo != null){
+            cant += cantidadDeHojasAux(nodo.getIzquierdo());
+            cant += cantidadDeHojasAux(nodo.getDerecho());
             if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
-                cant = cantidadDeHojasAux(nodo.getIzquierdo());
-                cant = cantidadDeHojasAux(nodo.getDerecho());
                 cant++;
             }
         }
         return cant;
     }
 
-    public int masNodosEnRango(int min, int max){
+    public int contarNodosEnUnRango(int min, int max){
+        /* Algoritmo que recibe por parametro dos valores de tipo entero que representan un rango numerico. Verifica que
+         * la estructura tenga por lo menos un elemento y que el rango sea correcto. Si se cumple invoca al metodo
+         * contarNodosEnUnRangoAux. Por ultimo retorna la cantidad de elementos que se encuentran dentro de dicho rango,
+         * en caso de no haber elementos se retorna -1.
+         */
         // Zona de inicializacion de variables
         int resultado;
         // Zona de declaracion de variables
-        resultado = 0;
+        resultado = -1;
 
         if(this.raiz != null && min < max){
-            resultado = masNodosEnRangoAux(this.raiz, min, max);
+            resultado = contarNodosEnUnRangoAux(this.raiz, min, max);
         }
         return resultado;
     }
 
-    private int masNodosEnRangoAux(NodoABB nodo, int min, int max){
+    private int contarNodosEnUnRangoAux(NodoABB nodo, int min, int max){
+        /* Algoritmo que dado un nodo de tipo NodoABB junto a dos valores de tipo entero que representan un rango de
+         * valores, determina la cantidad de nodos que se encuentran dentro de dicho rango, retornando el resultado.
+         */
         // Zona de declaracion de variables
         Comparable elem;
         NodoABB izq, der;
@@ -466,15 +550,12 @@ public class ArbolBB {
         if (nodo != null) {
             elem = nodo.getElem();
 
-            cant += masNodosEnRangoAux(nodo.getDerecho(), min, max);
+            cant += contarNodosEnUnRangoAux(nodo.getDerecho(), min, max);
+            cant += contarNodosEnUnRangoAux(nodo.getIzquierdo(), min, max);
             if (elem.compareTo(max) <= 0 && elem.compareTo(min) >= 0) {
                 cant++;
             }
-            cant += masNodosEnRangoAux(nodo.getIzquierdo(), min, max);
-            System.out.println("Nodo: " + elem + "\tcant: " + cant);
         }
         return cant;
     }
-
-
 }
