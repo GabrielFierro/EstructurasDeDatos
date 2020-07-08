@@ -56,7 +56,7 @@ public class ArbolBB {
         return exito;
     }
 
-    public boolean eliminar(Comparable elem){
+    public boolean eliminar(Comparable elem) {
         /* Algoritmo que dado un elemento de tipo Comparable, verifica que la raiz de la estructura de tipo Arbol
          * Binario de Busqueda tenga un nodo. En caso de que sea verdadero llama al metodo eliminarAux con dicho elem,
          * junto a la raiz del mencionado arbol, y procede a eliminar dicho elemento. Luego, si pudo eliminar el
@@ -67,13 +67,13 @@ public class ArbolBB {
         // Zona de inicializacion de variables
         exito = false;
 
-        if(this.raiz != null){
+        if (this.raiz != null) {
             exito = eliminarAux(elem, this.raiz, null);
         }
         return exito;
     }
 
-    private boolean eliminarAux(Comparable elem, NodoABB nodo, NodoABB padre){
+    private boolean eliminarAux(Comparable elem, NodoABB nodo, NodoABB padre) {
         /* Algoritmo que recibe por parametro un elemento de tipo Comparable, un nodo de tipo NodoABB junto a otro nodo
          * de tipo ABB. Identifica el nodo que se desea eliminar, es decir, puede ser un nodo hoja o un nodo que tenga
          * un solo hijo. Luego, invoca el metodo eliminarNodoHoja o eliminarHijo respectivamente, y procede a eliminar
@@ -84,29 +84,25 @@ public class ArbolBB {
         // Zona de inicializacion de variables
         exito = true;
 
-        if(nodo != null){
+        if (nodo != null) {
             Comparable elemento = nodo.getElem();
 
-            if(elem.compareTo(elemento) < 0){   // Analizo la rama izquierda
+            if (elem.compareTo(elemento) < 0) {   // Analizo la rama izquierda
                 exito = eliminarAux(elem, nodo.getIzquierdo(), nodo);
-            }
-            else{
-                if(elem.compareTo(elemento) > 0){   // Analizo la rama derecha
+            } else {
+                if (elem.compareTo(elemento) > 0) {   // Analizo la rama derecha
                     exito = eliminarAux(elem, nodo.getDerecho(), nodo);
-                }
-                else{
-                    if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){   // No tiene hijos
+                } else {
+                    if (nodo.getIzquierdo() == null && nodo.getDerecho() == null) {   // No tiene hijos
                         exito = eliminarNodoHoja(nodo, padre);
-                    }
-                    else{
-                        if(nodo.getIzquierdo() == null || nodo.getDerecho() == null){   // Tiene un solo hijo
+                    } else {
+                        if (nodo.getIzquierdo() == null || nodo.getDerecho() == null) {   // Tiene un solo hijo
                             exito = eliminarHijo(nodo, padre);
                         }
                     }
                 }
             }
-        }
-        else{
+        } else {
             exito = false;  // En caso de que el elemento no se encuentre en la estructura
         }
         return exito;
@@ -123,10 +119,9 @@ public class ArbolBB {
         // Zona de inicializacion de variables
         exito = true;
 
-        if(padre == null){  // Caso raiz
+        if (padre == null) {  // Caso raiz
             this.raiz = null;
-        }
-        else{
+        } else {
             if (padre.getIzquierdo() != null && padre.getIzquierdo().getElem().compareTo(hijo.getElem()) == 0) {
                 padre.setIzquierdo(null);
             } else if (padre.getDerecho() != null && padre.getDerecho().getElem().compareTo(hijo.getElem()) == 0) {
@@ -136,7 +131,7 @@ public class ArbolBB {
         return exito;
     }
 
-    private boolean eliminarHijo(NodoABB hijo, NodoABB padre){
+    private boolean eliminarHijo(NodoABB hijo, NodoABB padre) {
         /* Algoritmo que recibe por parametro un nodo hijo de tipo NodoABB junto a otro nodo padre de tipo NodoABB,
          * y busca al hijo por la rama del arbol correspondiente. Una vez encontrado, se elimina el nodo hijo.
          * El algoritmo retorna true, dado que siempre es posible eliminar en esta instancia.
@@ -146,23 +141,20 @@ public class ArbolBB {
         // Zona de inicializacion de variables
         exito = true;
 
-        if(hijo.getElem().compareTo(padre.getElem()) < 0){  // Pregunto si el hijo esta del lado izquierdo
-            if(hijo.getDerecho() != null){  // Tiene hijo derecho
+        if (hijo.getElem().compareTo(padre.getElem()) < 0) {  // Pregunto si el hijo esta del lado izquierdo
+            if (hijo.getDerecho() != null) {  // Tiene hijo derecho
                 NodoABB aux = hijo.getDerecho();
                 padre.setDerecho(aux);
-            }
-            else{   // Tiene hijo izquierdo
+            } else {   // Tiene hijo izquierdo
                 NodoABB aux = hijo.getIzquierdo();
                 padre.setIzquierdo(aux);
             }
-        }
-        else{
-            if(hijo.getElem().compareTo(padre.getElem()) > 0){  // Pregunto si el hijo esta del lado derecho
-                if(hijo.getDerecho() != null){  // Tiene hijo derecho
+        } else {
+            if (hijo.getElem().compareTo(padre.getElem()) > 0) {  // Pregunto si el hijo esta del lado derecho
+                if (hijo.getDerecho() != null) {  // Tiene hijo derecho
                     NodoABB aux = hijo.getDerecho();
                     padre.setDerecho(aux);
-                }
-                else{   // Tiene hijo izquierdo
+                } else {   // Tiene hijo izquierdo
                     NodoABB aux = hijo.getIzquierdo();
                     padre.setIzquierdo(aux);
                 }
@@ -180,16 +172,15 @@ public class ArbolBB {
         // Zona de inicialización de variables
         resultado = null;
 
-        if(nodo != null) {
-            if(nodo.getElem().equals(buscado)) {
+        if (nodo != null) {
+            if (nodo.getElem().equals(buscado)) {
                 // Si el buscado es n, lo devuelve
                 resultado = nodo;
-            }
-            else {
+            } else {
                 // No es el buscado: busca el primero en el HI
                 resultado = obtenerNodo(nodo.getIzquierdo(), buscado);
                 // Si no lo encuentra en el HI, busca en HD
-                if(resultado == null) {
+                if (resultado == null) {
                     resultado = obtenerNodo(nodo.getDerecho(), buscado);
                 }
             }
@@ -492,34 +483,34 @@ public class ArbolBB {
         return s;
     }
 
-    public int cantidadDeHojas(){
+    public int cantidadDeHojas() {
         // Zona de declaracion de variables
         int resultado;
         // Zona de inicializacion de variables
         resultado = 0;
 
-        if(this.raiz != null){
+        if (this.raiz != null) {
             resultado = cantidadDeHojasAux(this.raiz);
         }
         return resultado;
     }
 
-    private int cantidadDeHojasAux(NodoABB nodo){
+    private int cantidadDeHojasAux(NodoABB nodo) {
         // Zona de declaracion de variables
         int cant;
         // Zona de inicializacion de variables
         cant = 0;
-        if(nodo != null){
+        if (nodo != null) {
             cant += cantidadDeHojasAux(nodo.getIzquierdo());
             cant += cantidadDeHojasAux(nodo.getDerecho());
-            if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
+            if (nodo.getIzquierdo() == null && nodo.getDerecho() == null) {
                 cant++;
             }
         }
         return cant;
     }
 
-    public int contarNodosEnUnRango(int min, int max){
+    public int contarNodosEnUnRango(int min, int max) {
         /* Algoritmo que recibe por parametro dos valores de tipo entero que representan un rango numerico. Verifica que
          * la estructura tenga por lo menos un elemento y que el rango sea correcto. Si se cumple invoca al metodo
          * contarNodosEnUnRangoAux. Por ultimo retorna la cantidad de elementos que se encuentran dentro de dicho rango,
@@ -530,13 +521,13 @@ public class ArbolBB {
         // Zona de declaracion de variables
         resultado = -1;
 
-        if(this.raiz != null && min < max){
+        if (this.raiz != null && min < max) {
             resultado = contarNodosEnUnRangoAux(this.raiz, min, max);
         }
         return resultado;
     }
 
-    private int contarNodosEnUnRangoAux(NodoABB nodo, int min, int max){
+    private int contarNodosEnUnRangoAux(NodoABB nodo, int min, int max) {
         /* Algoritmo que dado un nodo de tipo NodoABB junto a dos valores de tipo entero que representan un rango de
          * valores, determina la cantidad de nodos que se encuentran dentro de dicho rango, retornando el resultado.
          */
@@ -557,5 +548,57 @@ public class ArbolBB {
             }
         }
         return cant;
+    }
+
+    public Comparable mejorCandidato(Comparable elem) {
+        /*
+         *
+         */
+        // Zona de declaracion de variables
+        Comparable elemento;
+        // Zona de inicializacion de variables
+        elemento = -1;
+
+        if (this.raiz != null) {
+            elemento = mejorCandidatoAux(this.raiz, elem);
+        }
+        return elemento;
+    }
+
+    private Comparable mejorCandidatoAux(NodoABB nodo, Comparable elem) {
+        // Zona de declaracion de variables
+        Comparable candidato = 0;
+        int difDer = 0, difIzq = 0;
+        NodoABB izq;
+        NodoABB der;
+        // Zona de inicializacion de variables
+        candidato = 0;
+        izq = nodo.getIzquierdo();
+        der = nodo.getDerecho();
+
+        if (nodo != null) {
+            System.out.println("\tnodo: " + nodo.getElem() + "\tElem: " + elem);
+            if (nodo.getIzquierdo() != null) {
+                candidato = mejorCandidatoAux(nodo.getIzquierdo(), elem);
+            }
+            if (nodo.getDerecho() != null) {
+                    candidato = mejorCandidatoAux(nodo.getDerecho(), elem);
+            }
+            //if (nodo.getElem().compareTo(elem) == 0) {// lo encontro
+                System.out.println("\tnodo: " + nodo.getElem() + "\tElem: " + elem);
+                if (der != null) {
+                    difDer = (int) elem - (int) der.getElem();
+                }
+                if (izq != null) {
+                    difIzq = (int) izq.getElem() - (int) elem;
+                }
+                if (difDer < difIzq) {
+                    candidato = nodo.getDerecho().getElem();
+                } else {
+                    candidato = nodo.getIzquierdo().getElem();
+                }
+            }
+        //}
+        return candidato;
     }
 }
