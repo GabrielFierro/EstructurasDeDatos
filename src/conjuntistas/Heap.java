@@ -3,50 +3,32 @@ package conjuntistas;
 @SuppressWarnings("rawtypes")
 
 public class Heap{
-	
-	// Zona de declaraci�n de atributos
+	/* Algoritmo que representa la estructura de datos de tipo Heap Minimo
+	 *
+	 */
+	// Zona de declaracion de atributos
 	private Comparable[] heap; 
 	private static final int TAMANIO=10;
 	private int ultimo;
 	
 	public Heap() {
 		this.heap = new Comparable[TAMANIO];
-		this.ultimo = 0; // La posici�n 0 nunca es utilizada
+		this.ultimo = 0; // La posicion 0 nunca es utilizada
 	}
 	
 	public boolean insertar(Comparable elemento) {
 		/* Recibe un elemento y lo inserta en el arbol. Devuelve true si se pudo
 		 * insertar el elemento, y falso en caso contrario.
 		 */
-		// Zona de declaraci�n de variables
+		// Zona de declaracion de variables
 		boolean exito;
-		// Zona de inicializaci�n de variables
+		// Zona de inicializacion de variables
 		exito = false;
 
 		if(this.ultimo+1 < TAMANIO) {
 			this.ultimo++;
 			this.heap[this.ultimo] = elemento;
 			hacerSubir(this.ultimo);
-			exito = true;
-		}
-		return exito;
-	}
-	
-	public boolean eliminarCima() {
-		/* Elimina el elemento de la raiz. Devuelve true si tuvo exito y false en cas contrario
-		 */
-		// Zona de declaraci�n de variables
-		boolean exito;
-		if(this.ultimo == 0) {
-			// Estructura vac�a
-			exito = false;
-		}
-		else {
-			// Saca la ra�z y pone la �ltima hoja en su lugar
-			this.heap[1] = this.heap[ultimo];
-			this.ultimo--;
-			// Restablece la propiedad de heap minimo
-			hacerBajar(1);
 			exito = true;
 		}
 		return exito;
@@ -58,7 +40,6 @@ public class Heap{
 		Comparable temp;
 		boolean salir;
 		// Zona de inicializacion de variables
-
 		temp = this.heap[posHijo];
 		salir = true;
 
@@ -78,8 +59,27 @@ public class Heap{
 		}
 	}
 
+	public boolean eliminarCima() {
+		/* Elimina el elemento de la raiz. Devuelve true si tuvo exito y false en cas contrario
+		 */
+		// Zona de declaracion de variables
+		boolean exito;
+		if (this.ultimo == 0) {
+			// Estructura vacia
+			exito = false;
+		} else {
+			// Saca la raiz y pone la ultima hoja en su lugar
+			this.heap[1] = this.heap[ultimo];
+			this.ultimo--;
+			// Restablece la propiedad de heap minimo
+			hacerBajar(1);
+			exito = true;
+		}
+		return exito;
+	}
+
 	private void hacerBajar(int posPadre) {
-		// Zona de declaraci�n de variables 
+		// Zona de declaracion de variables
 		int posH;
 		Comparable temp = this.heap[posPadre];
 		boolean salir = false;
@@ -105,52 +105,50 @@ public class Heap{
 					posPadre = posH;
 				}
 				else {
-					// el padre es menor que sus hijos, est� bien ubicado
+					// el padre es menor que sus hijos, esta bien ubicado
 					salir = true;
 				}
 			}
 			else {
-				// el temp es hoja, est� bien ubicado
+				// el temp es hoja, esta bien ubicado
 				salir = true;
 			}
 		}
 	}
 	
 	public Object recuperarCima() {
-		/* Algoritmo que devuelve el elemento que est� en la ra�z. 
+		/* Algoritmo que devuelve el elemento que esta en la raiz.
 		 */
 		Object aux;
 		aux = null;
 
 		if(this.heap[1] != null) {
 			aux = this.heap[1];
-			System.out.println("Cima del arbol: " + aux);
 		}
 		return aux;
 	}
 	
 	public boolean esVacio() {
-		/* Algoritmo que verifica si una estructura de tipo �rbol heap m�nimo posee elementos.
+		/* Algoritmo que verifica si una estructura de tipo arbol heap minimo posee elementos.
 		 * Retorna false si posee al menos un elemento, o true si no posee ninguno
 		 */
-		// Zona de declaraci�n de variables
+		// Zona de declaracion de variables
 		boolean exito;
-		// Zona de inicializaci�n de variables
+		// Zona de inicializacion de variables
 		exito = true;
-		if(this.heap[1] != null) { // Tiene elementos
+		if(this.heap[1] != null) { // Verifica si tiene elementos
 			exito = false;
 		}
 		return exito;
 	}
 	
 	public Heap clone() {
-		/* Algoritmo que hace una copia exacta de un arbol heap minimo
-		 * 
+		/* Algoritmo que hace una copia exacta de un arbol de tipo Heap Minimo
 		 */
-		// Zona de declaraci�n de variables
+		// Zona de declaracion de variables
 		Heap clon;
 		int longitud, i;
-		// Zona de inicializaci�n de variables
+		// Zona de inicializacion de variables
 		clon = new Heap();
 		longitud = this.heap.length;
 		
@@ -161,12 +159,12 @@ public class Heap{
 	}
 	@Override
 	public String toString() {
-		/* Algoritmo que muestra los elementos que posee la estructura �rbol Heap M�nimo
+		/* Algoritmo que muestra los elementos que posee la estructura arbol Heap Minimo
 		 */
-		// Zona de declaraci�n de varibles
+		// Zona de declaracion de varibles
 		String res;
 		int i, longitud;
-		// Zona de inicializaci�n de variables
+		// Zona de inicializacion de variables
 		res = "[";
 		longitud = this.heap.length;
 		
@@ -176,5 +174,4 @@ public class Heap{
 		res += "]";
 		return res;
 	}
-	
 }
