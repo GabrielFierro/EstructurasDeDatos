@@ -391,40 +391,49 @@ public class ArbolBin {
 		}
 		
 	}
-	
-	public Lista listarPorNiveles() {
-		/*
-		 * 
-		 */
-		// Zona de declaración de variables
-		Lista  listaNueva;
-		Cola cola;
-		NodoArbol nodoActual;
-		// Zona de inicialización de variables
-		listaNueva = new Lista();
-		cola = new Cola();
-		cola.poner(this.raiz);
-		
-		if(this.raiz != null) {
-			
-			while(cola.esVacia() == false ) {
-				
-				nodoActual = (NodoArbol)cola.obtenerFrente();
-				cola.sacar();
-				listaNueva.insertar(nodoActual.getElem(), 1);
-				
-				if(nodoActual.getIzquierdo() != null) {
-					cola.poner(nodoActual.getIzquierdo());
-					
-					if(nodoActual.getDerecho() != null) {
-						cola.poner(nodoActual.getDerecho());
-						
-					}
-				}
-			}
-		}
-		listaNueva.invertir();
-		return listaNueva;
+
+    public Lista listarPorNiveles() {
+	    /* Algoritmo que verifica que una estructura de tipo ArbolBin posea al menos un nodo, en caso afirmativo,
+	     * invoca al método listarPorNivelesAux(), en caso contrario retorna una lista vacía.
+	     */
+
+        // Zona de declaración de variables
+        Lista lista;
+        // Zona de inicialización de variables
+        lista = new Lista();
+
+        if(this.raiz != null) {
+            listarPorNivelesAux(this.raiz, lista);
+        }
+        return lista;
 	}
 
+    private void listarPorNivelesAux(NodoArbol nodo, Lista lista) {
+        /* Algoritmo que dado un nodo de tipo NodoArbol y una lista de tipo Lista recibidos por parámetro, carga dicha
+         * lista con el nodo y sus hijos, si los tuviese.
+         * Para ello utiliza una estructura auxiliar de tipo Cola junto a una variable iteradora.
+         */
+        // Zona de declaración de variables
+        Cola cola = new Cola();
+        int i;
+        // Zona de inicialización de variables
+        cola.poner(nodo);
+        i = 0;
+
+        while (!cola.esVacia()) {
+
+            nodo = (NodoArbol) cola.obtenerFrente();
+            cola.sacar();
+            lista.insertar(nodo.getElem(), i);
+            i++;
+
+            if (nodo.getIzquierdo() != null) {
+                cola.poner(nodo.getIzquierdo());
+            }
+            if (nodo.getDerecho() != null) {
+                cola.poner(nodo.getDerecho());
+
+            }
+        }
+    }
 }
