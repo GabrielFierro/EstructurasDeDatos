@@ -116,7 +116,7 @@ public class ArbolBin {
 			nodoDer = nodo.getDerecho();
 			
 			if((nodoIzq != null && nodoIzq.getElem().equals(elem)) || (nodoDer != null && nodoDer.getElem().equals(elem))) {
-				resultado = nodo.getElem();
+				resultado = nodo.getElem();	// Encontró el nodo padre
 			}
 			else {
 				resultado = obtenerPadre(nodo.getIzquierdo(), elem);
@@ -130,27 +130,23 @@ public class ArbolBin {
 	}
 	
 	public int altura(){
-		/* Algoritmo que devuelve la altura de un árbol, es decir la longitud del camino más largo desde la raíz de hasta una hoja.
-		 * Un árbol vacío tiene altura -1 y una hoja tiene altura 0
+		/* Algoritmo que devuelve la altura de un árbol, es decir la longitud del camino más largo
+		 * desde la raíz hasta una hoja. Un árbol vacío tiene altura -1 y una hoja tiene altura 0.
 		 */
-		// Zona de declaración de variables
 		int resultado;
-		// Zona de inicialización de variables
-		resultado = 0;
-		
 		resultado = alturaAux(this.raiz, -1);
-
 		return resultado;
 	}
-	
 	private int alturaAux(NodoArbol nodo, int altura) {
-		/*
+		/* Algoritmo que dado un nodo de tipo NodoArbol y un valor de tipo int que recibe por parámetro, calcula la
+		 * altura de una estructura de tipo ArbolBin en forma recursiva.
 		 */
+		// Zona de declaración de variables
 		int res1, res2;
-		
+
 		if(nodo != null) {
-			res1 = alturaAux(nodo.getIzquierdo(), altura+1);
-			res2 = alturaAux(nodo.getDerecho(), altura+1);
+			res1 = alturaAux(nodo.getIzquierdo(), altura+1);	// Recorre rama izquierda
+			res2 = alturaAux(nodo.getDerecho(), altura+1);	// Recorre rama derecha
 			if(res1 > res2) {
 				altura = res1;
 			}
@@ -162,6 +158,10 @@ public class ArbolBin {
 	}
 	
 	public int nivel(Object elemento) {
+		/* Algoritmo que dado un elemento de tipo Object recibido por parámetro, verifica que la estructura de tipo
+		 * ArbolBin tenga un nodo y en caso afirmativo, invoca al método nivelAux para calcular el nivel del árbol.
+		 * Casos especiales: Retorna 0 si el árbol posee únicamente la raíz, retorna -1 si el árbol está vacío.
+		 */
 		// Zona de declaración de variables
 		int res;
 		// Zona de inicialización de variables
@@ -173,7 +173,9 @@ public class ArbolBin {
 		return res;
 	}
 	public int nivelAux(NodoArbol nodo, Object elemento, int nivel) {
-		
+		/* Algoritmo que dado un nodo de tipo NodoArbol, un elemento de tipo Object y un valor de tipo int recibidos por
+		 * parámetro, calcula en forma recursiva el nivel del elemento recibido por parámetro.
+		 */
 		if(nodo != null) {
 			if(nodo.getElem().equals(elemento)) {
 				nivel = 0;
@@ -195,7 +197,7 @@ public class ArbolBin {
 	}
 	
 	public void vaciar() {
-		/* Algoritmo que quita todos los elementos de la estructura
+		/* Algoritmo que quita todos los elementos de la estructura de tipo ArbolBin
 		 */
 		if(this.raiz != null) {
 			this.raiz = null;
@@ -203,7 +205,7 @@ public class ArbolBin {
 	}
 	
 	public ArbolBin clone() {
-		/* Crea el arbol clon vacio, si this.raiz no es vacío llama al método privado clone con su raiz 
+		/* Algoritmo que crea el arbol clon vacio, si el árbol posee al menos el nodo raíz, invoca al método cloneAux
 		 */
 		// Zona de declaración de variables
 		ArbolBin clon;
@@ -216,7 +218,9 @@ public class ArbolBin {
 		return clon;
 	}
 	private NodoArbol cloneAux(NodoArbol raiz) {
-		/* 
+		/* Algoritmo que dado un nodo de tipo NodoArbol recibido por parámetro, realiza una copia exacta de la estructu-
+		 * del árbol original actual, en otro, y retorna los nodos que debe copiar en la nueva estructura, la cual se
+		 * encuentra en el método clone().
 		 */
 		// Zona de declaración de variables
 		NodoArbol nuevo;
@@ -234,27 +238,9 @@ public class ArbolBin {
 		return nuevo;
 	}
 	
-	public void preorden() {
-		// Imprime los elementos por consola en preorden
-		// Invoca a un método recursivo privado a la clase 
-		preordenAux(this.raiz);
-	}
-	
-	private void preordenAux(NodoArbol nodo) {
-		// Método recursivo es PRIVADO porque su parámetro es de tipo NodoArbol
-		
-		if(nodo != null) {
-			// Visita el elemento en el nodo
-			System.out.println(nodo.getElem()); // (1)
-			
-			// recorre a sus hijos en preorden
-			preordenAux(nodo.getIzquierdo()); // (2)
-			preordenAux(nodo.getDerecho());	// (3)
-		}
-	}
-	
 	public String toString() {
-		/* Algoritmo que muestra por pantalla, los elementos de una estructura de tipo Arbol.
+		/* Algoritmo que verifica que la estructura de tipo ArbolBin posea al menos un nodo raiz, en caso afirmativo,
+		 * invoca al método toStringAux(), y en caso contrario retorna "Arbol binario vacio".
 		 */
 		// Zona de declaración de variables
 		String s;
@@ -268,8 +254,9 @@ public class ArbolBin {
 	}
 	
 	private String toStringAux(NodoArbol original, String s) {
-		/*
-		 * 
+		/* Algoritmo que dado un nodo de tipo NodoArbol y una cadena de caracteres, recibidos por parámetro, carga en
+		 * la misma los elementos de cada nodo con sus respectivos hijos izquierdo e hijo derecho, si los tuviese.
+		 * En caso de no tener hijos almacena la cadena "null".
 		 */
 		// Zona de declaración de variables
 		NodoArbol izqAux, derAux;
@@ -285,7 +272,7 @@ public class ArbolBin {
 			}
 			else {
 				if(izqAux == null && derAux != null) {
-					s = s + "HI: null" + "\t\t" + "HD: " + derAux.getElem();// + izqAux.getElem() + "HD: null";
+					s = s + "HI: null" + "\t" + "HD: " + derAux.getElem();// + izqAux.getElem() + "HD: null";
 				}
 				else {
 					if(derAux == null && izqAux != null) {
@@ -303,8 +290,9 @@ public class ArbolBin {
 	}
 	
 	public Lista listarPreorden() {
-		/*
-		 * 
+		/* Algoritmo que verifica que la estructura de tipo ArbolBin posea al menos el nodo raíz, en caso afirmativo
+		 * invoca al método preordenAuxiliar() y en caso contrario, retorna una lista vacía dado que el árbol no
+		 * posee elementos y no hay elementos para listar.
 		 */
 		// Zona de declaración de variables
 		Lista listaNueva;
@@ -317,21 +305,26 @@ public class ArbolBin {
 		return listaNueva;
 	}
 	private void preordenAuxiliar(NodoArbol n, Lista l) {
-		// Método recursivo es PRIVADO porque su parámetro es de tipo NodoArbol
+		/* Algoritmo que dado un nodo de tipo NodoArbol y una lista de tipo Lista recibidos por parámetro, carga la
+		 * lista con elementos a partir de dicho nodo, en forma de preorden.
+		 * El recorrido es: Visitar nodo raíz, luego hijo izquierdo y por último el hijo derecho.
+		 */
 		// Zona de declaración de variables
 		NodoArbol elem;
 		
 		if(n != null) {
 			elem = new NodoArbol(n.getElem());
 			// Comienza a recorrer en preorden
-			
-			preordenAuxiliar(n.getDerecho(), l);
-			preordenAuxiliar(n.getIzquierdo(), l);
-			l.insertar(elem.getElem(),1);
+			// Inserta el hijo derecho, luego inserta el hijo izquierdo y por último inserta la raíz
+			preordenAuxiliar(n.getDerecho(), l);	// Recorre rama derecha
+			preordenAuxiliar(n.getIzquierdo(), l);	// Recorre rama izquierda
+			l.insertar(elem.getElem(),1);	// Inserta siempre en primera posición
 		}
 	}	
 	public Lista listarPosorden() {
-		/*
+		/* Algoritmo que verifica que la estructura de tipo ArbolBin posea al menos el nodo raíz, en caso afirmativo
+		 * invoca al método posordenAux() y en caso contrario, retorna una lista vacía dado que el árbol no
+		 * posee elementos y no hay elementos para listar.
 		 */
 		// Zona de declaración de variables
 		Lista listaNueva;
@@ -345,26 +338,29 @@ public class ArbolBin {
 	}
 	
 	private void posOrdenAux(NodoArbol n, Lista l) {
-		/*
+		/* Algoritmo que dado un nodo de tipo NodoArbol y una lista de tipo Lista recibidos por parámetro, carga la
+		 * lista con elementos a partir de dicho nodo, en forma de posorden.
+		 * El recorrido es: Visitar hijo izquierdo, luego derecho y por último la raíz.
 		 */
 		// Zona de declaración de variables
 		NodoArbol elem;
 
 		// Zona de inicialización de variables
-
 		if(n != null) {
 			elem = new NodoArbol(n.getElem());
 			// Comienza a recorrer en posorden
-			l.insertar(elem.getElem(), 1);
-			posOrdenAux(n.getDerecho(), l);
-			posOrdenAux(n.getIzquierdo(), l);
+			// Inserta el elemento raiz en primera posición, luego el hijo derecho y por último el hijo izquierdo
+			l.insertar(elem.getElem(), 1);	// Inserta los elementos en primera posición
+			posOrdenAux(n.getDerecho(), l);	// Recorre rama derecha
+			posOrdenAux(n.getIzquierdo(), l);	// Recorre rama izquierda
 		}
 		
 	}
-	
-	
+
 	public Lista listarInorden() {
-		/*
+		/* Algoritmo que verifica que la estructura de tipo ArbolBin posea al menos el nodo raíz, en caso afirmativo
+		 * invoca al método inordenAux() y en caso contrario, retorna una lista vacía dado que el árbol no
+		 * posee elementos y no hay elementos para listar.
 		 */
 		// Zona de declaración de variables
 		Lista  listaNueva;
@@ -378,14 +374,17 @@ public class ArbolBin {
 	}
 	
 	private void inOrdenAux(NodoArbol n, Lista l) {
-		/*
+		/* Algoritmo que dado un nodo de tipo NodoArbol y una lista de tipo Lista recibidos por parámetro, carga la
+		 * lista con elementos a partir de dicho nodo, en forma de inorden.
+		 * El recorrido es: Visitar hijo izquierdo, luego la raíz y por último el hijo derecho.
 		 */
 		// Zona de declaración de variables
 		NodoArbol nodoActual;
 		
 		if(n != null) {
-			nodoActual = new NodoArbol(n.getElem());			
-			
+			nodoActual = new NodoArbol(n.getElem());
+			// Comienza a recorrer en posorden
+			// Inserta el hijo derecho en la lista, luego la raíz y por último el hijo izquierdo
 			inOrdenAux(n.getDerecho(), l);
 			l.insertar(nodoActual.getElem(), 1);
 			inOrdenAux(n.getIzquierdo(), l);
@@ -427,4 +426,5 @@ public class ArbolBin {
 		listaNueva.invertir();
 		return listaNueva;
 	}
+
 }
