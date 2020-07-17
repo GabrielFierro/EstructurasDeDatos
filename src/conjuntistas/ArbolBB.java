@@ -556,49 +556,83 @@ public class ArbolBB {
          */
         // Zona de declaracion de variables
         Comparable elemento;
+        boolean exito;
+        NodoABB nodo;
         // Zona de inicializacion de variables
         elemento = -1;
+        nodo = obtenerNodo(this.raiz, elem);
 
-        if (this.raiz != null) {
-            elemento = mejorCandidatoAux(this.raiz, elem);
+        exito = verificarNodoHoja(nodo, elem);
+
+        if (this.raiz != null && !exito) {
+            elemento = mejorCandidatoAux(this.raiz, elem, -1,0,0);
         }
         return elemento;
     }
 
-    private Comparable mejorCandidatoAux(NodoABB nodo, Comparable elem) {
+    private Comparable mejorCandidatoAux(NodoABB nodo, Comparable elem, Comparable candidato, int difIzq, int difDer) {
+        /* Retorna el candidato que tenga la menor diferencia con elem. Si solo hay un candidato, devuelve siempre ese.
+         * Si el elemento no existe, retorna 0 y si ambos subarboles son nulos retorna -1.
+         */
         // Zona de declaracion de variables
-        Comparable candidato = 0;
-        int difDer = 0, difIzq = 0;
-        NodoABB izq;
-        NodoABB der;
+        NodoABB izquierdo;
+        NodoABB derecho;
+        int diferencia, igual;
+        boolean exito;
         // Zona de inicializacion de variables
-        candidato = 0;
-        izq = nodo.getIzquierdo();
-        der = nodo.getDerecho();
 
         if (nodo != null) {
-            System.out.println("\tnodo: " + nodo.getElem() + "\tElem: " + elem);
-            if (nodo.getIzquierdo() != null) {
-                candidato = mejorCandidatoAux(nodo.getIzquierdo(), elem);
-            }
-            if (nodo.getDerecho() != null) {
-                    candidato = mejorCandidatoAux(nodo.getDerecho(), elem);
-            }
-            //if (nodo.getElem().compareTo(elem) == 0) {// lo encontro
-                System.out.println("\tnodo: " + nodo.getElem() + "\tElem: " + elem);
-                if (der != null) {
-                    difDer = (int) elem - (int) der.getElem();
-                }
-                if (izq != null) {
-                    difIzq = (int) izq.getElem() - (int) elem;
-                }
-                if (difDer < difIzq) {
-                    candidato = nodo.getDerecho().getElem();
-                } else {
-                    candidato = nodo.getIzquierdo().getElem();
+            izquierdo = nodo.getIzquierdo();
+            derecho = nodo.getDerecho();
+
+            candidato = mejorCandidatoAux(izquierdo, elem, candidato, difIzq, difDer); // Recorre sub-arbol izquierdo
+            candidato = mejorCandidatoAux(derecho, elem, candidato, difIzq, difDer);   // Recorre sub-arbol derecho
+
+            if (derecho != null) {
+                difDer = Math.abs((int) derecho.getElem() - (int) elem);
+                diferencia = obtenerDiferencia(elem, candidato);
+                igual = derecho.getElem().compareTo(elem);
+                if (difDer < diferencia && igual != 0) {
+                    candidato = derecho.getElem();
                 }
             }
-        //}
+            if (izquierdo != null) {
+                difIzq = Math.abs((int) izquierdo.getElem() - (int) elem);
+                diferencia = obtenerDiferencia(elem, candidato);
+                igual = izquierdo.getElem().compareTo(elem);
+                if (difIzq < diferencia && igual != 0) {
+                    candidato = izquierdo.getElem();
+                }
+            }
+        }
         return candidato;
     }
+
+    private int obtenerDiferencia(Comparable elem, Comparable candidato){
+        int resultado;
+
+        resultado = Math.abs((int) candidato - (int) elem);
+
+        return resultado;
+    }
+
+    private boolean verificarNodoHoja(NodoABB nodo, Comparable elem) {
+        /* Algoritmo que dado un elemento que recibe por parámetro, determina si el mismo se encuentra en la estructura
+         * de tipo arbol binario de busqueda, y verifica si no posee hojas. En caso afirmativo retorna true, en caso
+         * contrario retorna false.
+         */
+        // Zona de declaracion de variables
+        boolean exito;
+        // Zona de inicializacion de variables
+        exito = true;
+
+        if (nodo != null) {
+            if (nodo.getIzquierdo() != null && nodo.getDerecho() != null) {
+                exito = false;
+            }
+        }
+        return exito;
+    }
+
+
 }
