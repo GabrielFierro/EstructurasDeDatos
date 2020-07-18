@@ -2,6 +2,9 @@ package conjuntistas;
 
 import jerarquicas.NodoArbol;
 import lineales.dinamicas.Lista;
+import lineales.dinamicas.Nodo;
+
+import java.util.concurrent.ConcurrentMap;
 
 public class ArbolBB {
 
@@ -550,65 +553,106 @@ public class ArbolBB {
         return cant;
     }
 
-    public Comparable mejorCandidato(Comparable elem) {
-        /*
-         *
-         */
-        // Zona de declaracion de variables
+    public Comparable mejorCandidato(Comparable elem){
+        /* Algoritmo que recibe un elemento de tipo Comparable por parámetro, obtiene el nodo de dicho elemento y si,
+        * tal nodo no es nulo invoca al método mejorCandidatoAux().
+        * En caso de que el nodo sea nulo, retorna el elemento 0.
+        */
+        // Zona de declaración de variables
         Comparable elemento;
-        boolean exito;
         NodoABB nodo;
-        // Zona de inicializacion de variables
-        elemento = -1;
-        nodo = obtenerNodo(this.raiz, elem);
+        // Zona de inicialización de variables
+        elemento = 0;
 
-        exito = verificarNodoHoja(nodo, elem);
+        nodo = obtenerNodo(this.raiz, elem);    // Obtengo el nodo del elemento recibido por parámetro
 
-        if (this.raiz != null && !exito) {
-            elemento = mejorCandidatoAux(this.raiz, elem, -1,0,0);
+        if (nodo != null) {
+            elemento = mejorCandidatoAux(nodo, elem);
         }
         return elemento;
     }
 
-    private Comparable mejorCandidatoAux(NodoABB nodo, Comparable elem, Comparable candidato, int difIzq, int difDer) {
-        /* Retorna el candidato que tenga la menor diferencia con elem. Si solo hay un candidato, devuelve siempre ese.
-         * Si el elemento no existe, retorna 0 y si ambos subarboles son nulos retorna -1.
+    private Comparable mejorCandidatoAux(NodoABB nodo, Comparable elem){
+        /* Algoritmo que recibe un nodo de tipo NodoABB junto a un elemento de tipo Comparable por parámetro y determina
+         * el elemento candidato que se encuentre más cerca de elem.
+         * Si el nodo no tiene ningún hijo, retorna el valor -1.
+         * Sino, si tiene hijo izquierdo únicamente, éste se considera como el candidato.
+         * Ahora, si tiene hijo derecho únicamente, éste se considera como el candidato.
          */
-        // Zona de declaracion de variables
-        NodoABB izquierdo;
-        NodoABB derecho;
-        int diferencia, igual;
-        boolean exito;
-        // Zona de inicializacion de variables
+        // Zona de declaración de variables
+        Comparable candidato, candidatoIzq, candidatoDer;
+        int diferenciaIzq, diferenciaDer;
+        NodoABB izquierdo, derecho;
+        // Zona de inicialización de variables
+        candidato = 0;
+        candidatoIzq = 0;
+        candidatoDer = 0;
+        diferenciaIzq = 0;
+        diferenciaDer = 0;
+        izquierdo = nodo.getIzquierdo();
+        derecho = nodo.getDerecho();
 
-        if (nodo != null) {
-            izquierdo = nodo.getIzquierdo();
-            derecho = nodo.getDerecho();
-
-            candidato = mejorCandidatoAux(izquierdo, elem, candidato, difIzq, difDer); // Recorre sub-arbol izquierdo
-            candidato = mejorCandidatoAux(derecho, elem, candidato, difIzq, difDer);   // Recorre sub-arbol derecho
-
-            if (derecho != null) {
-                difDer = Math.abs((int) derecho.getElem() - (int) elem);
-                diferencia = obtenerDiferencia(elem, candidato);
-                igual = derecho.getElem().compareTo(elem);
-                if (difDer < diferencia && igual != 0) {
-                    candidato = derecho.getElem();
-                }
-            }
+        if (izquierdo == null && derecho == null) {   // Cubro el caso de que el nodo no tenga hijos
+            candidato = -1;
+        } else {
             if (izquierdo != null) {
-                difIzq = Math.abs((int) izquierdo.getElem() - (int) elem);
-                diferencia = obtenerDiferencia(elem, candidato);
-                igual = izquierdo.getElem().compareTo(elem);
-                if (difIzq < diferencia && igual != 0) {
-                    candidato = izquierdo.getElem();
-                }
+                candidatoIzq = obtenerCandidato(izquierdo, false);  // Busca el mayor por el lado izquierdo
+                diferenciaIzq = obtenerDiferencia(candidatoIzq, elem);  // Calcula la diferencia entre candidatoIzq y elem
+            }
+            if (derecho != null) {
+                candidatoDer = obtenerCandidato(derecho, true); // Busca el menor por el lado derecho
+                diferenciaDer = obtenerDiferencia(candidatoDer, elem);  // Calcula la diferencia entre candidatoDer y elem
+            }
+            if (diferenciaIzq < diferenciaDer || derecho == null) {
+                candidato = candidatoIzq;   // Cubro el caso de que el nodo tenga solamente hijo izquierdo
+            } else {
+                candidato = candidatoDer;   // Cubro el caso de que el nodo tenga solamente hijo derecho
             }
         }
         return candidato;
     }
 
-    private int obtenerDiferencia(Comparable elem, Comparable candidato){
+    private Comparable obtenerCandidato(NodoABB nodo, boolean recorrido){
+        /* Algoritmo que recibe un nodo de tipo NodoABB junto a una variable booleana por parámetro, y determina el
+         * candidato de dicho nodo teniendo en cuenta el valor de dicha variable booleana.
+         * Si el valor de la variable booleana es true, recorre por la rama izquierda hasta encontrar el menor elemento.
+         * En caso contrario, recorre por la rama derecha hasta encontrar el mayor elemento.
+         */
+        // Zona de declaración de variables
+        NodoABB izquierdo, derecho;
+        // Zona de inicialización de variables
+        Comparable elemento;
+        boolean encontrado;
+        // Zona de inicializacion de variables
+        elemento = null;
+        encontrado = false;
+
+        while (nodo != null && !encontrado) {
+
+            if(recorrido) { // Recorrido por la izquierda con el nodo que recibe por parámetro
+                if (nodo.getIzquierdo() != null) {
+                    nodo = nodo.getIzquierdo();
+                } else {
+                    elemento = nodo.getElem();
+                    encontrado = true;
+                }
+            }else{  // Recorrido por la derecha con el nodo que recibe por parámetro
+                if (nodo.getDerecho() != null) {
+                    nodo = nodo.getDerecho();
+                } else { // Encontro el elemento
+                    elemento = nodo.getElem();
+                    encontrado = true;
+                }
+            }
+        }
+        return elemento;
+    }
+
+    private int obtenerDiferencia(Comparable candidato, Comparable elem){
+        /* Algoritmo que dados dos elementos de tipo Comparable, calcula la diferencia absoluta entre ambos, y
+         * retorna el resultado
+         */
+        // Zona de declaración de variables
         int resultado;
 
         resultado = Math.abs((int) candidato - (int) elem);
@@ -616,7 +660,7 @@ public class ArbolBB {
         return resultado;
     }
 
-    private boolean verificarNodoHoja(NodoABB nodo, Comparable elem) {
+    private boolean verificarNodoHoja(NodoABB nodo) {
         /* Algoritmo que dado un elemento que recibe por parámetro, determina si el mismo se encuentra en la estructura
          * de tipo arbol binario de busqueda, y verifica si no posee hojas. En caso afirmativo retorna true, en caso
          * contrario retorna false.
@@ -633,6 +677,4 @@ public class ArbolBB {
         }
         return exito;
     }
-
-
 }
