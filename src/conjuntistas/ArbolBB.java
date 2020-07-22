@@ -605,15 +605,15 @@ public class ArbolBB {
             // Determina el mejor candidato
             if (diferenciaIzq < diferenciaDer) {
                 if (derecho == null) {
-                    candidato = candidatoIzq;   // Cubro el caso de que el nodo tenga solamente hijo izquierdo
+                    candidato = candidatoIzq;   // Cubro el caso de que el nodo tenga solamente rama izquierda
                 } else {
-                    candidato = candidatoDer;   // Cubro el caso de que tenga solo hijo derecho
+                    candidato = candidatoDer;   // Cubro el caso de que el nodo tenga solamente rama derecha
                 }
             } else {
                 if (derecho == null) {
-                    candidato = candidatoIzq;
+                    candidato = candidatoIzq;   // Cubro el caso de que tenga solo hijo izquierdo
                 } else {
-                    candidato = candidatoDer;   // Cubro el caso de que el nodo tenga solamente hijo derecho
+                    candidato = candidatoDer;   // Cubro el caso de que tenga solo hijo derecho
                 }
             }
         }
