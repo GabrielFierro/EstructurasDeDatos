@@ -55,7 +55,6 @@ public class ArbolBB {
                 n.setDerecho(new NodoABB(elemento));
             }
         }
-
         return exito;
     }
 
@@ -603,10 +602,19 @@ public class ArbolBB {
                 candidatoDer = obtenerCandidato(derecho, true); // Busca el menor por el lado derecho
                 diferenciaDer = obtenerDiferencia(candidatoDer, elem);  // Calcula la diferencia entre candidatoDer y elem
             }
-            if (diferenciaIzq < diferenciaDer || derecho == null) {
-                candidato = candidatoIzq;   // Cubro el caso de que el nodo tenga solamente hijo izquierdo
+            // Determina el mejor candidato
+            if (diferenciaIzq < diferenciaDer) {
+                if (derecho == null) {
+                    candidato = candidatoIzq;   // Cubro el caso de que el nodo tenga solamente hijo izquierdo
+                } else {
+                    candidato = candidatoDer;   // Cubro el caso de que tenga solo hijo derecho
+                }
             } else {
-                candidato = candidatoDer;   // Cubro el caso de que el nodo tenga solamente hijo derecho
+                if (derecho == null) {
+                    candidato = candidatoIzq;
+                } else {
+                    candidato = candidatoDer;   // Cubro el caso de que el nodo tenga solamente hijo derecho
+                }
             }
         }
         return candidato;
