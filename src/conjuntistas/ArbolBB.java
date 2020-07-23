@@ -571,6 +571,61 @@ public class ArbolBB {
         return elemento;
     }
 
+  /*  private Comparable mejorCandidatoAux(NodoABB nodo, Comparable elem){
+        /* Algoritmo que recibe un nodo de tipo NodoABB junto a un elemento de tipo Comparable por parámetro y determina
+         * el elemento candidato que se encuentre más cerca de elem.
+         * Si el nodo no tiene ningún hijo, retorna el valor -1.
+         * Sino, si tiene hijo izquierdo únicamente, éste se considera como el candidato.
+         * Ahora, si tiene hijo derecho únicamente, éste se considera como el candidato.
+         */
+  /*      // Zona de declaración de variables
+        Comparable candidato, candidatoIzq, candidatoDer;
+        int diferenciaIzq, diferenciaDer;
+        NodoABB izquierdo, derecho;
+        // Zona de inicialización de variables
+        candidato = 0;
+        candidatoIzq = 0;
+        candidatoDer = 0;
+        diferenciaIzq = 0;
+        diferenciaDer = 0;
+        izquierdo = nodo.getIzquierdo();
+        derecho = nodo.getDerecho();
+
+        if (izquierdo == null && derecho == null) {   // Cubro el caso de que el nodo no tenga hijos
+            candidato = -1;
+        } else {
+            if (izquierdo != null) {
+                System.out.println("izquierdo: " + izquierdo.getElem());
+                candidatoIzq = obtenerCandidato(izquierdo, false);  // Busca el mayor por el lado izquierdo
+                diferenciaIzq = obtenerDiferencia(candidatoIzq, elem);  // Calcula la diferencia entre candidatoIzq y elem
+            }
+            if (derecho != null) {
+                System.out.println("derecho: " + derecho.getElem());
+                candidatoDer = obtenerCandidato(derecho, true); // Busca el menor por el lado derecho
+                diferenciaDer = obtenerDiferencia(candidatoDer, elem);  // Calcula la diferencia entre candidatoDer y elem
+            }
+            // Determina el mejor candidato
+            System.out.println("\ndiferenciaIzq: " + diferenciaIzq + "\tdiferenciaDer: " + diferenciaDer);
+            System.out.println("\ncandidatoIzq: " + candidatoIzq + "\tcandidatoDer: " + candidatoDer);
+            if (diferenciaIzq < diferenciaDer) {
+                if (derecho != null) {
+                   // System.out.println("Entro con candidatoIzq");
+                 //   candidato = candidatoIzq;   // Cubro el caso de que el nodo tenga solamente rama izquierda
+                //}
+                //else {
+                    candidato = candidatoDer;   // Cubro el caso de que el nodo tenga solamente rama derecha
+                }
+            } else {
+                if (derecho == null) {
+                    candidato = candidatoIzq;   // Cubro el caso de que tenga solo hijo izquierdo
+                } else {
+                    candidato = candidatoDer;   // Cubro el caso de que tenga solo hijo derecho
+                }
+            }
+        }
+        return candidato;
+    }*/
+
     private Comparable mejorCandidatoAux(NodoABB nodo, Comparable elem){
         /* Algoritmo que recibe un nodo de tipo NodoABB junto a un elemento de tipo Comparable por parámetro y determina
          * el elemento candidato que se encuentre más cerca de elem.
@@ -602,23 +657,24 @@ public class ArbolBB {
                 candidatoDer = obtenerCandidato(derecho, true); // Busca el menor por el lado derecho
                 diferenciaDer = obtenerDiferencia(candidatoDer, elem);  // Calcula la diferencia entre candidatoDer y elem
             }
-            // Determina el mejor candidato
-            if (diferenciaIzq < diferenciaDer) {
-                if (derecho == null) {
-                    candidato = candidatoIzq;   // Cubro el caso de que el nodo tenga solamente rama izquierda
-                } else {
-                    candidato = candidatoDer;   // Cubro el caso de que el nodo tenga solamente rama derecha
-                }
-            } else {
-                if (derecho == null) {
-                    candidato = candidatoIzq;   // Cubro el caso de que tenga solo hijo izquierdo
-                } else {
-                    candidato = candidatoDer;   // Cubro el caso de que tenga solo hijo derecho
+
+            if(izquierdo == null){
+                candidato = candidatoDer;   // Cubro el caso de que tenga solo HD
+            }else{
+                if(derecho == null){
+                    candidato = candidatoIzq;   // Cubro el caso de que tenga solO HI
+                }else{
+                    if(diferenciaIzq < diferenciaDer){  // Si tiene HI y HD, determino que elemento se encuentra más cerca
+                        candidato = candidatoIzq;
+                    }else{
+                        candidato = candidatoDer;
+                    }
                 }
             }
         }
         return candidato;
     }
+
 
     private Comparable obtenerCandidato(NodoABB nodo, boolean recorrido){
         /* Algoritmo que recibe un nodo de tipo NodoABB junto a una variable booleana por parámetro, y determina el
